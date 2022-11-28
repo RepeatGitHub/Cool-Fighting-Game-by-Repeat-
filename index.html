@@ -46,6 +46,7 @@ var mous = false;
 var keys = [];
 var keyNotCode = [];
 var mousePresssed = false;
+key = 0;
 var mode = "play";
 var modeStats = {
     winner: "na",
@@ -2789,12 +2790,13 @@ var draw = function() {
             }
         }
         var toStringExceptions = ["/",".",","];
-        if (key.toString() === key.toString().toUpperCase()&&keyCode===0&&toStringExceptions.indexOf(key.toString())===-1) {
+        if (str(key) === str(key).toUpperCase()&&keyCode===0&&toStringExceptions.indexOf(str(key))===-1) {
             textAlign(LEFT,TOP);
             textSize(20);
             fill(0);
             text("Be sure that Caps Lock is off and nobody\nis pressing shift!",10,10);
         }
+        //println(key);
     }
     if (mode==="winscreen") {
         pushMatrix();
@@ -3202,8 +3204,8 @@ var draw = function() {
             text("Select your level!",200,300);
         }
     }
-        println(mode)
     //mode="playerselect";
+    //println(mode);
 };
 mode="levelselect";
 keyPressed = function() {
