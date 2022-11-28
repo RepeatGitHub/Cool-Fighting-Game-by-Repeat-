@@ -13,7 +13,7 @@
   <script>
   var programCode = function(processingInstance) {
     with (processingInstance) {
-      size(400, 400); 
+      size(max(window.innerWidth,400), max(window.innerHeight,400)); 
       frameRate(30);
         
       // Paste code from Khan Academy here:
@@ -1693,7 +1693,7 @@ var backgrond = function() {
         background(173, 173, 173);
     }
 };
-var showHitboxes = true;
+var showHitboxes = false;
 var shieldingAllowed = true;
 var platformRender = function() {
 if (stage===0) {
@@ -2912,8 +2912,8 @@ var draw = function() {
         //println(p[2]);
         //println(p[modeStats.gameChars-1]);
         fill(100);
-        rect(0,0,400,40);
-        rect(0,240,400,160);
+        rect(0,0,width,40);
+        rect(0,240+(height-400),width,160);
         var allchars = [
             {
                 name: "Stickman",
@@ -2989,7 +2989,7 @@ var draw = function() {
             );
             */
             var ob1 = {
-                x: 200+
+                x: width/2+
                     ((350/boxesamount)*
                     ((a+1)-floor(a/boxesamount)*(boxesamount/2)-
                     min(allchars.length,ceil((a+1)/boxesamount)*boxesamount)/2-0.5)),
@@ -3006,7 +3006,7 @@ var draw = function() {
             textSize(100/boxesamount);
             if (allchars[a]!==undefined) {
                 if (myImages[a][69]===undefined) {
-                    text(a,200+((350/boxesamount)*((a+1)-floor(a/boxesamount)*(boxesamount/2)-min(allchars.length,ceil((a+1)/boxesamount)*boxesamount)/2-0.5)),80+(300/boxesamount)*(floor(a/boxesamount)));
+                    text(a,width/2+((350/boxesamount)*((a+1)-floor(a/boxesamount)*(boxesamount/2)-min(allchars.length,ceil((a+1)/boxesamount)*boxesamount)/2-0.5)),80+(300/boxesamount)*(floor(a/boxesamount)));
                 } else {
                     //println("a");
                     repeatsImageGenerator(myImages[a][69],ob1.x,ob1.y,ob1.h,ob1.w,modeStats.colorvar);
@@ -3038,26 +3038,26 @@ var draw = function() {
         fill(255, 255, 255);
         if (touchingbutton===-1) {
             textSize(30);
-            text("P"+(modeStats.charSelector+1)+", select your\ncharacter!",200,300);
+            text("P"+(modeStats.charSelector+1)+", select your\ncharacter!",width/2,300+(height-400));
             textSize(15);
             if (modeStats.charSelector===0) {
-                text("Controls: Arrow Keys to Move, and '/', '.', and ',' to attack.\nUse 'M' to shield.",200,357);
+                text("Controls: Arrow Keys to Move, and '/', '.', and ',' to attack.\nUse 'M' to shield.",width/2,357+(height-400));
             } else if (modeStats.charSelector===1) {
-                text("Controls: WASD to Move, and 'Q', 'E', and 'F' to attack.\nUse 'R' to shield.",200,357);
+                text("Controls: WASD to Move, and 'Q', 'E', and 'F' to attack.\nUse 'R' to shield.",width/2,357+(height-400));
             } else if (modeStats.charSelector===2) {
-                text("Controls: YGHJ to Move, and 'T', 'U', and 'K' to attack.\nUse 'I' to shield.",200,357);
+                text("Controls: YGHJ to Move, and 'T', 'U', and 'K' to attack.\nUse 'I' to shield.",width/2,357+(height-400));
             }
         } else {
             textSize(20);
             textAlign(LEFT,TOP);
-            text(allchars[touchingbutton].name,15,330);
+            text(allchars[touchingbutton].name,15,330+(height-400));
             textSize(15);
-            text(allchars[touchingbutton].desc,15,355);
-            repeatsImageGenerator(myImages[touchingbutton][0][0],10,250,64,64,modeStats.colorvar);
+            text(allchars[touchingbutton].desc,15,355+(height-400));
+            repeatsImageGenerator(myImages[touchingbutton][0][0],10,250+(height-400),64,64,modeStats.colorvar);
             textAlign(CENTER,CENTER);
             fill(255, 255, 255, 127);
             textSize(30);
-            text("P"+(modeStats.charSelector+1)+", select your\ncharacter!",200,300);
+            text("P"+(modeStats.charSelector+1)+", select your\ncharacter!",width/2,300+(height-400));
         }
         fill(0, 0, 0);
         rect(modeStats.colorvar*40+80,0,40,40);
@@ -3069,15 +3069,15 @@ var draw = function() {
         rect(170,10,20,20);
         if (mousePresssed&&mouseY<40&&mouseX>80&&!mous) {
             mous=true;
-            if (mouseX<200) {
+            if (mouseX<width/2) {
                 modeStats.colorvar=floor(mouseX/40)-2;
             }
         }
     }
     if (mode==="levelselect") {
         fill(100);
-        rect(0,0,400,40);
-        rect(0,240,400,160);
+        rect(0,0,width,40);
+        rect(0,240+(height-400),width,160);
         var alllevels = [
             "Default Arena",
             "3D Glasses Mode",
@@ -3141,7 +3141,7 @@ var draw = function() {
             );
             */
             var ob1 = {
-                x: 200+
+                x: width/2+
                     ((350/boxesamount)*
                     ((a+1)-floor(a/boxesamount)*(boxesamount/2)-
                     min(allchars.length,ceil((a+1)/boxesamount)*boxesamount)/2-0.5)),
@@ -3193,15 +3193,15 @@ var draw = function() {
         fill(255, 255, 255);
         if (touchingbutton===-1) {
             textSize(30);
-            text("Select your level!",200,300);
+            text("Select your level!",width/2,300+(height-400));
         } else {
             textSize(20);
             textAlign(LEFT,TOP);
-            text(allchars[touchingbutton],15,330);
+            text(allchars[touchingbutton],15,330+(height-400));
             textAlign(CENTER,CENTER);
             fill(255, 255, 255, 127);
             textSize(30);
-            text("Select your level!",200,300);
+            text("Select your level!",width/2,300+(height-400));
         }
     }
     //mode="playerselect";
