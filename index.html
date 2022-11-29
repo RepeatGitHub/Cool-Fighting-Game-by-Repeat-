@@ -3,13 +3,14 @@
   <head>
     <title>Cool Fighting Game (by Repeat)</title> 
   </head>
-  <body>
+  <body style="background-color:black;">
     <canvas id="mycanvas"></canvas> 
   </body>
  
   <!-- Include the processing.js library -->
   <!-- See https://khanacademy.zendesk.com/hc/en-us/articles/202260404-What-parts-of-ProcessingJS-does-Khan-Academy-support- for differences -->
   <script src="https://cdn.jsdelivr.net/processing.js/1.4.8/processing.min.js"></script> 
+  <script type="text/javascript" src="https://livejs.com/live.js"></script> <!-- copied from https://stackoverflow.com/questions/5588658/auto-reload-browser-when-i-save-changes-to-html-file-in-chrome -->
   <script>
   var programCode = function(processingInstance) {
     with (processingInstance) {
@@ -29,7 +30,7 @@
 // - Make the P1 P2 etc. markers colored (done)
 // Note to self: Pablo said I should:
 // - Make normal move more rewarding (like maybe less vx slowness requirement)
-// - Maybe different unique moves (like side specials and down specials instead of just an upwards move)
+// - Maybe different unique moves (like side specials and down specials instead of just an upwards move) (as described above and below)
 // - Aerial moves!!! Maybe some moves are unique when in air, perhaps
 // - Balance move attack damages, as well as move animations
 // - Literally balance Bounciboi to hell. Also nerf Nidorino's damage output.
