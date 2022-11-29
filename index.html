@@ -14,7 +14,7 @@
   var programCode = function(processingInstance) {
     with (processingInstance) {
       size(max(window.innerWidth-10,400), max(window.innerHeight-10,400)); 
-      frameRate(30);
+      frameRate(60);
         
       // Paste code from Khan Academy here:
 // Note to self: Ian said I should:
@@ -1905,6 +1905,15 @@ var draw = function() {
         mous=false;
     }
     if (mode==="play") {
+        pushMatrix();
+        if (width>height) {
+            //translate((height-400)/2,0);
+            translate(height/2-200,0);
+            scale(height/400);
+        } else {
+            translate(0,height-width);
+            scale(width/400);
+        }
         platformRender();
         var lasthp = [];
         for (var a=0;a<p.length;a++) {
@@ -2811,6 +2820,12 @@ var draw = function() {
             text("Be sure that Caps Lock is off and nobody\nis pressing shift!",10,10);
         }
         //println(key);
+        if (width>height) {
+            fill(0);
+            rect(0,0,-1*(height-400)/2,height);
+            rect(400,0,width,height);
+        }
+        popMatrix();
     }
     if (mode==="winscreen") {
         pushMatrix();
