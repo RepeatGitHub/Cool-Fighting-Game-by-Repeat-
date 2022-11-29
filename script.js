@@ -941,7 +941,7 @@ var draw = function() {
                     if (p[a].char===2&&p[a].fall) {
                         if (p[a].frame1!==5&&frameCount===floor(frameCount/10)*10) {
                             particles=append(particles,{
-                                x: p[a].x+24,
+                                x: p[a].x+24+(p[a].dir-0.5)*2*12,
                                 y: p[a].y+40,
                                 vx: 0,
                                 vy: p[a].vy-2,
