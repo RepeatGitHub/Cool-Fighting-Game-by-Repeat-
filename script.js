@@ -45,7 +45,7 @@ var modeStats = {
     shieldingAllowed: true,
     smoothVxHitbox: true,
     smoothVyHitbox: true,
-    legacyMoveIndicators: true,
+    legacyMoveIndicators: false,
 };
 var characterData = [ // Default goes to 0 if I forgot to place my data for other characters.
     {
@@ -235,12 +235,12 @@ var stage = 0;
         //println(globall.myImagees===undefined);
         //println(globall.myImagees);
 var myImagees = globall.myImagees;
-        println(myImagees);
+        //println(myImagees);
         //println("a");
 //var myImages = myImagees();
 //var myImages = globall.myImages;
         //println(myImages===undefined);
-        println(globall.myImages===undefined);
+        //println(globall.myImages===undefined);
 
 var repeatsImageGenerator = function(imgg,imgx,imgy,imglength,imgwidth,allfill) {
     noStroke();
@@ -1384,10 +1384,14 @@ var draw = function() {
                     rect(40+100*a,375,10,10);
                 }
                 if (modeStats.shieldingAllowed) {
+                    var shieldBarGoUp = 0;
+                    if (modeStats.legacyMoveIndicators===false) {
+                        shieldBarGoUp = 15;
+                    }
                     fill(0, 100, 100);
-                    rect(10+100*a,390,40,5);
+                    rect(10+100*a,390-shieldBarGoUp,40,5);
                     fill(0, 255, 255);
-                    rect(10+100*a,390,max(40*(p[a].shieldLeft/modeStats.shieldMax),0),5);
+                    rect(10+100*a,390-shieldBarGoUp,max(40*(p[a].shieldLeft/modeStats.shieldMax),0),5);
                     var mn = "m";
                     var rr = "r";
                     var pp = "i";
