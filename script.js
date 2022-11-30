@@ -102,6 +102,7 @@ var p = [
         fall: false,
         canjump: true,
         movecool: 0,
+        slamdown: 0,
         shieldLeft: modeStats.shieldMax,
         hitbox: {
             x: 200,
@@ -144,6 +145,7 @@ var p = [
         fall: false,
         canjump: true,
         movecool: 0,
+        slamdown: 0,
         shieldLeft: modeStats.shieldMax,
         hitbox: {
             x: 200,
@@ -677,8 +679,12 @@ var draw = function() {
             var kk = "h";
             var ll = "j";
             if (((keys[RIGHT]&&!keys[LEFT]&&!keys[DOWN]&&p[a].player===0)||((keyNotCode[dd]||keyNotCode[dd.toUpperCase()])&&!keyNotCode[aa]&&!keyNotCode[aa.toUpperCase()]&&!keyNotCode[ss]&&!keyNotCode[ss.toUpperCase()]&&p[a].player===1)||((keyNotCode[ll]||keyNotCode[ll.toUpperCase()])&&!keyNotCode[jj]&&!keyNotCode[jj.toUpperCase()]&&!keyNotCode[kk]&&!keyNotCode[kk.toUpperCase()]&&p[a].player===2)||(p[a].cpu.right&&!p[a].cpu.left&&!p[a].cpu.down))&&p[a].movecool<frameCount) {
-                p[a].vx=3;
-                p[a].frame1=1;
+                if (p[a].frame1===6) {
+                    p[a].vx=2;
+                } else {
+                    p[a].frame1=1;
+                    p[a].vx=3;
+                }
                 p[a].dir=1;
             }
             if (p[a].movecool>frameCount) {
@@ -686,8 +692,12 @@ var draw = function() {
                 p[a].frame2=0;
             }
             if (((keys[LEFT]&&!keys[RIGHT]&&!keys[DOWN]&&p[a].player===0)||((keyNotCode[aa]||keyNotCode[aa.toUpperCase()])&&!keyNotCode[dd]&&!keyNotCode[dd.toUpperCase()]&&!keyNotCode[ss]&&!keyNotCode[ss.toUpperCase()]&&p[a].player===1)||((keyNotCode[jj]||keyNotCode[jj.toUpperCase()])&&!keyNotCode[ll]&&!keyNotCode[ll.toUpperCase()]&&!keyNotCode[kk]&&!keyNotCode[kk.toUpperCase()]&&p[a].player===2)||(p[a].cpu.left&&!p[a].cpu.right&&!p[a].cpu.down))&&p[a].movecool<frameCount) {
-                p[a].vx=-3;
-                p[a].frame1=1;
+                if (p[a].frame1===6) {
+                    p[a].vx=-2;
+                } else {
+                    p[a].frame1=1;
+                    p[a].vx=-3;
+                }
                 p[a].dir=0;
             }
             if (((keys[DOWN]&&p[a].player===0)||(keyNotCode[ss]&&p[a].player===1)||(keyNotCode[kk]&&p[a].player===2)||(p[a].cpu.down))&&p[a].movecool<frameCount) {
@@ -806,7 +816,11 @@ var draw = function() {
                     p[a].y-=p[a].vy;
                     p[a].fall=true;
                 } else if (p[a].frame1!==6&&p[a].vy<2) {
-                    p[a].vy=-10;
+                    if (p[a].vy>-10) {
+                        p[a].vy=-10;
+                    } else {
+                        p[a].vy-=0.4;
+                    }
                 }
                 //println(p[a].vy);
                 if (p[a].vy>0) {
@@ -820,8 +834,16 @@ var draw = function() {
                                 p[b].fall=true;
                                 if (characterData[p[b].char]!==undefined) {
                                     p[b].vy*=p[b].hp/200+1+characterData[p[b].char].knockbackplus;
+                                    if (abs(p[a].vx)!==constrain(abs(p[a].vx),0.5,2)) {
+                                        var avgaround = 10;
+                        p[b].vx=(p[b].vx+p[a].vx*(avgaround-1))/avgaround;
+                                    }
                                 } else {
                                     p[b].vy*=p[b].hp/200+1+characterData[0].knockbackplus;
+                                    if (abs(p[a].vx)!==constrain(abs(p[a].vx),0.5,2)) {
+                                        var avgaround = 10;
+                                        p[b].vx=(p[b].vx+p[a].vx*(avgaround-1))/avgaround;
+                                    }
                                 }
                                 //p[b].vy*=p[b].hp/200+1;
                                 if (p[a].vy===constrain(p[a].vy,0,4)) { 
@@ -829,7 +851,7 @@ var draw = function() {
                                 } else {
                                     p[b].movecool=frameCount+30;
                                 }
-                                p[b].hp+=max(floor(abs(p[a].vy))/20,0.1);
+                                p[b].hp+=max(floor(abs(p[a].vy))/20,0.1)+p[a].slamdown/16;
                                     p[b].canjump=false;
                                 p[b].hp=round(p[b].hp*10)/10;
                                 //println(p[b].hp);
@@ -1414,6 +1436,10 @@ var draw = function() {
                         p[a].shieldLeft=modeStats.shieldMax;
                     }
                 }
+                p[a].slamdown=(p[a].slamdown*9)/10;
+                if (p[a].vy*-1>p[a].slamdown) {
+                    p[a].slamdown=p[a].vy*-1;
+                }
             }
             if (p[a].lightflash.time>0) {
                 //println(p[a].lightflash.x2);
@@ -1521,6 +1547,7 @@ var draw = function() {
                         fall: false,
                         canjump: true,
                         movecool: 0,
+                        slamdown: 0,
                         shieldLeft: modeStats.shieldMax,
                         hitbox: {
                             x: 200,
