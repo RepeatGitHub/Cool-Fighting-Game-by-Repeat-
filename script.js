@@ -611,7 +611,7 @@ var draw = function() {
                 p[a].y=99999999;
                 p[a].vx=0;
                 p[a].vy=0;
-            } else if (p[a].y<-48-(height-400)) {
+            } else if (p[a].y<-48-(height-400)/(width-400)) {
                 //println(floor(frameCount/60)*60);
                 if (frameCount===floor(frameCount/60)*60) {
                     p[a].hp+=1;
@@ -1333,14 +1333,14 @@ var draw = function() {
             //}
             //image(get(p[a].x,p[a].y,48,48),p[a].x-24,p[a].y-24,96,96);
             
-            if ((p[a].x!==constrain(p[a].x,-24,400-24)||p[a].y<-24-(height-400))&&p[a].stock>0) {
+            if ((p[a].x!==constrain(p[a].x,-24,400-24)||p[a].y<-24-(height-400)/(width-400))&&p[a].stock>0) {
                 fill(0, 0, 0, 100);
-                ellipse(constrain(p[a].x+24,20,380),max(p[a].y+36,24-(height-400)),30,30);
+                ellipse(constrain(p[a].x+24,20,380),max(p[a].y+36-(height-400),24-(height-400)/(width-400)),30,30);
                 fill(255, 0, 0);
                 if (p[a].x<0) {
-                    ellipse(constrain(p[a].x+24,20,380),max(p[a].y+36,24-(height-400)),10+(-48-p[a].x)/3,10+(-48-p[a].x)/3);
+                    ellipse(constrain(p[a].x+24,20,380),max(p[a].y+36,24-(height-400)/(width-400)),10+(-48-p[a].x)/3,10+(-48-p[a].x)/3);
                 } else {
-                    ellipse(constrain(p[a].x+24,20,380),max(p[a].y+36,24-(height-400)),10+(p[a].x-400)/3,10+(p[a].x-400)/3);
+                    ellipse(constrain(p[a].x+24,20,380),max(p[a].y+36,24-(height-400)/(width-400)),10+(p[a].x-400)/3,10+(p[a].x-400)/3);
                 }
             }
             var isOk=0;
