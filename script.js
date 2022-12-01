@@ -828,9 +828,12 @@ var draw = function() {
                         if (b!==a) {
                             if (coll(p[b].hitbox,p[a].hitbox)) {
                                 p[b].vy=2;
+                                p[b].y-=1;
                                 if (p[a].vy>6&&p[b].y>p[a].y) {
-                                    p[b].y=p[a].y;
+                                    p[b].y=p[a].y-1;
+                                    //p[b].y=p[a].hitbox.y-p[a].hitbox.h-p[b].hitbox.h;
                                 }
+                                    p[b].canjump=false;
                                 p[b].fall=true;
                                 if (characterData[p[b].char]!==undefined) {
                                     p[b].vy*=p[b].hp/200+1+characterData[p[b].char].knockbackplus;
@@ -852,7 +855,6 @@ var draw = function() {
                                     p[b].movecool=frameCount+30;
                                 }
                                 p[b].hp+=max(floor(abs(p[a].vy))/20,0.1)+p[a].slamdown/16;
-                                    p[b].canjump=false;
                                 p[b].hp=round(p[b].hp*10)/10;
                                 //println(p[b].hp);
                                 //p[b].movecool=frameCount+abs(p[a].vx)*5;
@@ -875,10 +877,67 @@ var draw = function() {
             var ee = "e";
             var oo = "u";
             if (((keyNotCode[slash]&&p[a].player===0)||(keyNotCode[ee]&&p[a].player===1)||(keyNotCode[oo]&&p[a].player===2)||(p[a].cpu.at1))&&p[a].vx===constrain(p[a].vx,-0.2,0.2)&&p[a].movecool<frameCount) {
-                if (((keys[UP]&&p[a].player===0)||(keyNotCode[ww]&&p[a].player===1)||(keyNotCode[ii]&&p[a].player===2)||(p[a].cpu.up))&&p[a].frame1===3&&p[a].vy<3) {
-                    p[a].frame1=4;
+                if (((keys[UP]&&p[a].player===0)||(keyNotCode[ww]&&p[a].player===1)||(keyNotCode[ii]&&p[a].player===2)||(p[a].cpu.up))&&(p[a].frame1===3)||p[a].frame1===5) {
+                    var tempCharData = characterData[0].jumpheight;
+                    if (characterData[p[a].char]!==undefined) {
+                        tempCharData=characterData[p[a].char].jumpheight;
+                    }
+                    if (p[a].vy===constrain(p[a].vy,tempCharData*0.8,tempCharData)) {//if (p[a].vy===constrain(p[a].vy,tempCharData*0.8,tempCharData)) {
+                        // up tilt codery (same hitbox as jumping)
+                        p[a].frame1=5;
+                        p[a].frame2=1;
+                        p[a].vy=0;
+                        //println(frameCount);
+                        if (p[a].player===0) {
+                            keys[UP]=false;
+                            keyNotCode[slash]=false;
+                        }
+                        if (p[a].player===1) {
+                            keyNotCode[ww]=false;
+                            keyNotCode[ee]=false;
+                        }
+                        if (p[a].player===2) {
+                            keyNotCode[ii]=false;
+                            keyNotCode[oo]=false;
+                        }
+                        p[a].cpu.up=false;
+                        p[a].cpu.atk1=false;
+                        if (p[a].char!==2) {
+                            for (var b=0;b<p.length;b++) {
+                                if (b!==a) {
+                                    if (coll(p[b].hitbox,p[a].hitbox)) {
+                                        p[b].vy=2;
+                                        p[b].fall=true;
+                                        if (characterData[p[b].char]!==undefined) {
+                                            p[b].vy*=p[b].hp/200+1+characterData[p[b].char].knockbackplus;
+                                        } else {
+                                            p[b].vy*=p[b].hp/200+1+characterData[0].knockbackplus;
+                                        }
+                                        p[b].movecool=frameCount+10;
+                                        p[b].hp+=floor(random(10,16))/10;
+                                        p[b].canjump=false;
+                                        p[b].hp=round(p[b].hp*10)/10;
+                                    }
+                                }
+                            }
+                        } else if (p[a].char===2) { // nidorino up tilt codery
+                            p[a].vy=0;
+                            particles=append(particles,{
+                                x: p[a].x+40,
+                                y: p[a].y+40,
+                                vx: (p[a].dir-0.5)*2*random(0.5,1.5),
+                                vy: random(3,4),
+                                opacity: 255,
+                                owner: a,
+                                colorr: color(255, 0, 255),
+                                size: floor(random(10,16)),
+                            });
+                        }
+                    } else if (p[a].vy<3){
+                        p[a].frame1=4;
+                    }
                 } else {
-                    if (p[a].vx===constrain(p[a].vx,-0.2,0.2)) {
+                    if (p[a].vx===constrain(p[a].vx,-0.1,0.1)) {
                         if (p[a].dir===1) {
                             p[a].vx=10;
                         } else {
@@ -890,6 +949,7 @@ var draw = function() {
                         } else {
                             p[a].vx=-5;
                         }
+                        //println(frameCount);
                     }
                     p[a].frame1=4;
                     p[a].frame2=0;
@@ -1376,6 +1436,9 @@ var draw = function() {
                 textSize(15);
                 //var temptext = ""+floor(p[a].hp*10);
                 var temptext = ""+floor(lasthp[a]*10);
+                if (temptext==="0") {
+                    temptext="00";
+                }
                 text(join(shorten(temptext),"")+"."+temptext[temptext.length-1],50+100*a,350);
                 textSize(10);
                 text("Stocks: "+max(p[a].stock,0),10+100*a,315);
@@ -1466,7 +1529,7 @@ var draw = function() {
             textAlign(LEFT,TOP);
             textSize(20);
             fill(0);
-            text("Be sure that Caps Lock is off and nobody\nis pressing shift!",10,10);
+            text("Be sure that Caps Lock is off and nobody is pressing shift! (Or keys like Control, Alt, Backspace, or the number keys.)",10,10-(height-400),400,400);
         }
         //println(key);
         if (width>height) {
