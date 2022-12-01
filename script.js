@@ -649,7 +649,7 @@ var draw = function() {
                     }
                     repeatsImageGenerator(myImages[p[a].char][p[a].frame1][p[a].frame2],p[a].x,p[a].y,48,myImages[p[a].char][p[a].frame1][p[a].frame2][0].length*3,p[a].colorvar);
                     if (p[a].hp>=100) {
-                        repeatsImageGenerator(myImages[p[a].char][p[a].frame1][p[a].frame2],p[a].x,p[a].y,48,myImages[p[a].char][p[a].frame1][p[a].frame2][0].length*3,color(255,0,0,min(p[a].hp-100,200)*(sin(frameCount*5*(180/PI))/2+0.5)));
+                        repeatsImageGenerator(myImages[p[a].char][p[a].frame1][p[a].frame2],p[a].x,p[a].y,48,myImages[p[a].char][p[a].frame1][p[a].frame2][0].length*3,color(255,0,0,min(p[a].hp-100,200)*(sin(frameCount*5/(180/PI))/2+0.5)));
                     }
                 } else {
                     if (!showHitboxes) {
@@ -658,7 +658,7 @@ var draw = function() {
                     }
                     repeatsImageGenerator(myImages[p[a].char][p[a].frame1][p[a].frame2],p[a].x+48,p[a].y,48,-48,p[a].colorvar);
                     if (p[a].hp>=100) {
-                        repeatsImageGenerator(myImages[p[a].char][p[a].frame1][p[a].frame2],p[a].x,p[a].y,48,myImages[p[a].char][p[a].frame1][p[a].frame2][0].length*3,color(255,0,0,min(p[a].hp-100,200)*(sin(frameCount*5*(180/PI))/2+0.5)));
+                        repeatsImageGenerator(myImages[p[a].char][p[a].frame1][p[a].frame2],p[a].x,p[a].y,48,myImages[p[a].char][p[a].frame1][p[a].frame2][0].length*3,color(255,0,0,min(p[a].hp-100,200)*(sin(frameCount*5/(180/PI))/2+0.5)));
                     }
                 }
             }
@@ -742,7 +742,7 @@ var draw = function() {
             var canDoUp=true;
             var period = ".";
             var q = "q";
-            var uu = "t";
+            var uu = "t"; // down special codery
             // this is if you press the up special input while holding down
             if (((keys[DOWN]&&p[a].player===0)||(keyNotCode[ss]&&p[a].player===1)||(keyNotCode[kk]&&p[a].player===2)||(p[a].cpu.down))&&((keyNotCode[q]&&p[a].player===1)||(keyNotCode[period]&&p[a].player===0)||(keyNotCode[uu]&&p[a].player===2)||(p[a].cpu.at2))&&p[a].movecool<frameCount) {
                 canDoUp=false;
@@ -803,7 +803,7 @@ var draw = function() {
             }
             // this is the normal up special move
             if (((keyNotCode[q]&&p[a].player===1)||(keyNotCode[period]&&p[a].player===0)||(keyNotCode[uu]&&p[a].player===2)||(p[a].cpu.at2))&&p[a].movecool<frameCount&&canDoUp) {
-                
+                // special move codery
                 if (p[a].canjump) {
                     p[a].frame1=6;
                     p[a].canjump=false;
@@ -871,14 +871,14 @@ var draw = function() {
                 p[a].vy-=0.2;
             }
             //println(p[a].frame1);
-            var slash = "/";
+            var slash = "/"; // neutral attack codery
             var ee = "e";
             var oo = "u";
             if (((keyNotCode[slash]&&p[a].player===0)||(keyNotCode[ee]&&p[a].player===1)||(keyNotCode[oo]&&p[a].player===2)||(p[a].cpu.at1))&&p[a].vx===constrain(p[a].vx,-0.2,0.2)&&p[a].movecool<frameCount) {
                 if (((keys[UP]&&p[a].player===0)||(keyNotCode[ww]&&p[a].player===1)||(keyNotCode[ii]&&p[a].player===2)||(p[a].cpu.up))&&p[a].frame1===3&&p[a].vy<3) {
                     p[a].frame1=4;
                 } else {
-                    if (p[a].vx===0) {
+                    if (p[a].vx===constrain(p[a].vx,-0.2,0.2)) {
                         if (p[a].dir===1) {
                             p[a].vx=10;
                         } else {
@@ -1332,15 +1332,24 @@ var draw = function() {
             //    p[a].hitbox.y+=p[a].vy;
             //}
             //image(get(p[a].x,p[a].y,48,48),p[a].x-24,p[a].y-24,96,96);
-            
-            if ((p[a].x!==constrain(p[a].x,-24,400-24)||p[a].y<-24-(height-400)/(width-400))&&p[a].stock>0) {
+            //var burger1 = (max(height-400,1)/max(width-400,1))*400;
+            var burger1 = ((height-400)-(width-400));
+            //var burger1 = max(height-400,1);
+            //println(burger1);
+            //fill(0);
+            //text(burger1,40,40);
+            if ((p[a].x!==constrain(p[a].x,-24,400-24)||p[a].y<-24-burger1)&&p[a].stock>0) {
                 fill(0, 0, 0, 100);
-                ellipse(constrain(p[a].x+24,20,380),max(p[a].y+36-(height-400),24-(height-400)/(width-400)),30,30);
+                if (p[a].x===constrain(p[a].x,0,400)) {
+                ellipse(constrain(p[a].x+24,20,380),max(p[a].y+36,45-burger1),30,30);
+                } else {
+                ellipse(constrain(p[a].x+24,20,380),max(p[a].y+36,24-burger1),30,30);
+                }
                 fill(255, 0, 0);
                 if (p[a].x<0) {
-                    ellipse(constrain(p[a].x+24,20,380),max(p[a].y+36,24-(height-400)/(width-400)),10+(-48-p[a].x)/3,10+(-48-p[a].x)/3);
-                } else {
-                    ellipse(constrain(p[a].x+24,20,380),max(p[a].y+36,24-(height-400)/(width-400)),10+(p[a].x-400)/3,10+(p[a].x-400)/3);
+                    ellipse(constrain(p[a].x+24,20,380),max(p[a].y+36,24-burger1),10+(-48-p[a].x)/3,10+(-48-p[a].x)/3);
+                } else if (p[a].x>400) {
+                    ellipse(constrain(p[a].x+24,20,380),max(p[a].y+36,24-burger1),10+(p[a].x-400)/3,10+(p[a].x-400)/3);
                 }
             }
             var isOk=0;
