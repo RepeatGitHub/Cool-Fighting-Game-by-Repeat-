@@ -828,9 +828,8 @@ var draw = function() {
                         if (b!==a) {
                             if (coll(p[b].hitbox,p[a].hitbox)) {
                                 p[b].vy=2;
-                                p[b].y-=1;
                                 if (p[a].vy>6&&p[b].y>p[a].y) {
-                                    p[b].y=p[a].y-1;
+                                    p[b].y=p[a].y;
                                     //p[b].y=p[a].hitbox.y-p[a].hitbox.h-p[b].hitbox.h;
                                 }
                                     p[b].canjump=false;
@@ -1524,6 +1523,11 @@ var draw = function() {
                 }
             }
         }
+        for (var a=0;a<p.length;a++) {
+            if (lasthp[a]!==p[a].hp) {
+                p[a].y-=1;
+            }
+        }
         var toStringExceptions = ["/",".",","];
         if (str(key) === str(key).toUpperCase()&&keyCode===0&&toStringExceptions.indexOf(str(key))===-1) {
             textAlign(LEFT,TOP);
@@ -1541,8 +1545,8 @@ var draw = function() {
     }
     if (mode==="winscreen") {
         pushMatrix();
-        rotate(-10);
-        translate(-50,100);
+        rotate(-10*(PI/180));
+        translate(-50,50);
         fill(207, 207, 207);
         rect(0,0,500,50);
         fill(0, 0, 0);
