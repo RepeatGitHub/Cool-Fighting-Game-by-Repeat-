@@ -912,7 +912,8 @@ var draw = function() {
                                         } else {
                                             p[b].vy*=p[b].hp/200+1+characterData[0].knockbackplus;
                                         }
-                                        p[b].movecool=frameCount+10;
+                                        p[b].vx=0;
+                                        p[b].movecool=frameCount+20;
                                         p[b].hp+=floor(random(10,16))/10;
                                         p[b].canjump=false;
                                         p[b].hp=round(p[b].hp*10)/10;
@@ -1392,7 +1393,7 @@ var draw = function() {
             //}
             //image(get(p[a].x,p[a].y,48,48),p[a].x-24,p[a].y-24,96,96);
             //var burger1 = (max(height-400,1)/max(width-400,1))*400;
-            var burger1 = ((height-400)-(width-400));
+            var burger1 = max((height-400)-(width-400),0);
             //var burger1 = max(height-400,1);
             //println(burger1);
             //fill(0);
@@ -1407,7 +1408,7 @@ var draw = function() {
                 fill(255, 0, 0);
                 if (p[a].x<0) {
                     ellipse(constrain(p[a].x+24,20,380),max(p[a].y+36,24-burger1),10+(-48-p[a].x)/3,10+(-48-p[a].x)/3);
-                } else if (p[a].x>400) {
+                } else if (p[a].x>400-24) {
                     ellipse(constrain(p[a].x+24,20,380),max(p[a].y+36,24-burger1),10+(p[a].x-400)/3,10+(p[a].x-400)/3);
                 }
             }
