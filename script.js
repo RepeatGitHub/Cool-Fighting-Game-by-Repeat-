@@ -46,6 +46,7 @@ var modeStats = {
     smoothVxHitbox: true,
     smoothVyHitbox: true,
     legacyMoveIndicators: false,
+    moveIndicatorsVer: 1,
 };
 var characterData = [ // Default goes to 0 if I forgot to place my data for other characters.
     {
@@ -875,7 +876,8 @@ var draw = function() {
             var slash = "/"; // neutral attack codery
             var ee = "e";
             var oo = "u";
-            if (((keyNotCode[slash]&&p[a].player===0)||(keyNotCode[ee]&&p[a].player===1)||(keyNotCode[oo]&&p[a].player===2)||(p[a].cpu.at1))&&p[a].vx===constrain(p[a].vx,-0.2,0.2)&&p[a].movecool<frameCount) {
+            var cancelBigHits = true; // makes it so that if you try to deal a neutral attack in the middle of an up special that's going down too fast, it won't work.
+            if (((keyNotCode[slash]&&p[a].player===0)||(keyNotCode[ee]&&p[a].player===1)||(keyNotCode[oo]&&p[a].player===2)||(p[a].cpu.at1))&&!(cancelBigHits&&p[a].frame1===5&&p[a].vy<-8)&&p[a].vx===constrain(p[a].vx,-0.2,0.2)&&p[a].movecool<frameCount) {
                 if (((keys[UP]&&p[a].player===0)||(keyNotCode[ww]&&p[a].player===1)||(keyNotCode[ii]&&p[a].player===2)||(p[a].cpu.up))&&(p[a].frame1===3)||p[a].frame1===5) {
                     var tempCharData = characterData[0].jumpheight;
                     if (characterData[p[a].char]!==undefined) {
@@ -957,6 +959,7 @@ var draw = function() {
                 }
             }
             if (p[a].frame1===4) {
+                // neutral attack codery
                 if (p[a].vx===constrain(p[a].vx,-2,2)) {
                     p[a].frame2=1;
                 } else {
@@ -1454,14 +1457,14 @@ var draw = function() {
                 } else {
                     fill(255, 0, 0);
                 }
-                if (modeStats.legacyMoveIndicators) {
+                if (modeStats.moveIndicatorsVer===0) {
                     rect(10+100*a,375,10,10);
                 }
                 fill(255, 0, 0);
                 if (p[a].canjump&&p[a].movecool<frameCount) {
                     fill(0, 255, 0);
                 }
-                if (modeStats.legacyMoveIndicators) {
+                if (modeStats.moveIndicatorsVer===0) {
                     rect(25+100*a,375,10,10);
                 }
                 fill(0, 255, 0);
@@ -1474,12 +1477,12 @@ var draw = function() {
                         fill(255, 0, 0);
                     }
                 }
-                if (modeStats.legacyMoveIndicators) {
+                if (modeStats.moveIndicatorsVer===0) {
                     rect(40+100*a,375,10,10);
                 }
                 if (modeStats.shieldingAllowed) {
                     var shieldBarGoUp = 0;
-                    if (modeStats.legacyMoveIndicators===false) {
+                    if (modeStats.moveIndicatorsVer!==0) {
                         shieldBarGoUp = 15;
                     }
                     fill(0, 100, 100);
@@ -1506,6 +1509,58 @@ var draw = function() {
                         p[a].shieldLeft+=0.25;
                     } else {
                         p[a].shieldLeft=modeStats.shieldMax;
+                    }
+                }
+                // move indicator codery
+                if (modeStats.moveIndicatorsVer===1) {
+                    var shieldBarGoUp = 15;
+                    var grid = [[0,0,0],[0,0,0],[0,0,0]];
+                    if (p[a].vx===constrain(p[a].vx,-0.2,0.2)&&p[a].movecool<frameCount) {
+                        if (p[a].vx===constrain(p[a].vx,-0.1,0.1)) {
+                            grid[1][1]=3;
+                            if (p[a].vy<-2) {
+                                if (p[a].vy>=-8) {
+                                    grid[1][1]=4;
+                                } else {
+                                    grid[1][1]=1;
+                                }
+                            }
+                        } else {
+                            grid[1][1]=2;
+                        }
+                    } else {
+                        grid[1][1]=1;
+                    }
+                    if (p[a].canjump) {
+                        grid[2][1]=3;
+                        grid[0][1]=3;
+                    } else {
+                        if (p[a].frame1===6) {
+                            grid[0][1]=1;
+                        } else {
+                            grid[0][1]=4;
+                        }
+                        grid[2][1]=1;
+                    }
+                    for (var c=0;c<3;c++) {
+                        for (var d=0;d<3;d++) {
+                            if (grid[c][d]===0) {
+                                fill(100);
+                            }
+                            if (grid[c][d]===1) {
+                                fill(255,0,0);
+                            }
+                            if (grid[c][d]===2) {
+                                fill(255,255,0);
+                            }
+                            if (grid[c][d]===3) {
+                                fill(0,255,0);
+                            }
+                            if (grid[c][d]===4) {
+                                fill(0,255,255);
+                            }
+                            rect(10+100*a+14*d,397-shieldBarGoUp+7*c,12,5);
+                        }
                     }
                 }
                 p[a].slamdown=(p[a].slamdown*9)/10;
@@ -1953,6 +2008,14 @@ var draw = function() {
     }
     //mode="playerselect";
     //println(mode);
+    if (1===1) {
+        if (modeStats.legacyMoveIndicators) {
+            if (modeStats.moveIndicatorsVer!==0) {
+                modeStats.moveIndicatorsVer=0;
+                modeStats.legacyMoveIndicators=false;
+            }
+        }
+    }
 };
 mode="levelselect";
 keyPressed = function() {
