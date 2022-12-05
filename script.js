@@ -57,6 +57,7 @@ var characterData = [ // Default goes to 0 if I forgot to place my data for othe
         knockbackplus: 0,
         downspecialmove: false,
         downspecialmaxdmg: 0.2,
+        meleeFox: false, // I mentioned this below, but this feature re-enables the Melee Fox glitch, which I turned into a feature for modders and future me.
     },
     {
         jumpheight: 4,
@@ -66,6 +67,7 @@ var characterData = [ // Default goes to 0 if I forgot to place my data for othe
         knockbackplus: 0.1,
         downspecialmove: false,
         downspecialmaxdmg: 0.3,
+        meleeFox: false,
     },
     {
         jumpheight: 4,
@@ -74,6 +76,7 @@ var characterData = [ // Default goes to 0 if I forgot to place my data for othe
         knockbackplus: 0,
         downspecialmove: false,
         downspecialmaxdmg: 0.1,
+        meleeFox: false,
     },
     {
         jumpheight: 4,
@@ -83,6 +86,7 @@ var characterData = [ // Default goes to 0 if I forgot to place my data for othe
         knockbackplus: 0,
         downspecialmove: true,
         downspecialmaxdmg: 0.2,
+        meleeFox: false,
     },
 ];
 var cpu1="cpu1";
@@ -1512,6 +1516,7 @@ var draw = function() {
                 if (modeStats.moveIndicatorsVer===0) {
                     rect(40+100*a,375,10,10);
                 }
+                // shield codery
                 if (modeStats.shieldingAllowed) {
                     var shieldBarGoUp = 0;
                     if (modeStats.moveIndicatorsVer!==0) {
@@ -1530,7 +1535,9 @@ var draw = function() {
                             p[a].shieldLeft-=max(0,p[a].movecool-frameCount)/20; // this makes you lose more shield if you take move cooldown while shielding
                             p[a].hp=lasthp[a];
                             p[a].movecool=0;
-                            p[a].vx=0;
+                            if (characterData[p[a].char].meleeFox) {
+                                p[a].vx=0; // Causes the Melee Fox glitch, so I made the glitch a feature for modders and future me.
+                            }
                             fill(0, 255, 255, 127);
                             ellipse(p[a].hitbox.x+p[a].hitbox.w/2,p[a].hitbox.y+p[a].hitbox.h/2,p[a].hitbox.w,p[a].hitbox.h);
                         }
