@@ -1396,7 +1396,8 @@ var draw = function() {
             //}
             //image(get(p[a].x,p[a].y,48,48),p[a].x-24,p[a].y-24,96,96);
             //var burger1 = (max(height-400,1)/max(width-400,1))*400;
-            var burger1 = max((height-400)-(width-400),0);
+            //var burger1 = max((height-400)-(width-400),0);
+            var burger1 = max((height-width)*(160000/width),0);
             //var burger1 = max(height-400,1);
             //println(burger1);
             //fill(0);
@@ -1404,7 +1405,7 @@ var draw = function() {
             if ((p[a].x!==constrain(p[a].x,-24,400-24)||p[a].y<-24-burger1)&&p[a].stock>0) {
                 fill(0, 0, 0, 100);
                 if (p[a].x===constrain(p[a].x,0,400)) {
-                ellipse(constrain(p[a].x+24,20,380),max(p[a].y+36,45-burger1),30,30);
+                ellipse(constrain(p[a].x+24,20,380),max(p[a].y+36,24-burger1),30,30);
                 } else {
                 ellipse(constrain(p[a].x+24,20,380),max(p[a].y+36,24-burger1),30,30);
                 }
@@ -1585,6 +1586,7 @@ var draw = function() {
             }
         }
         var toStringExceptions = ["/",".",","];
+        //if (event.getModifierState('CapsLock')||(str(key) === str(key).toUpperCase()&&keyCode===0&&toStringExceptions.indexOf(str(key))===-1)) {
         if (str(key) === str(key).toUpperCase()&&keyCode===0&&toStringExceptions.indexOf(str(key))===-1) {
             textAlign(LEFT,TOP);
             textSize(20);
