@@ -819,6 +819,9 @@ var draw = function() {
                     }
                 }
             }
+            if (p[a].vy<-16) {
+                //println(p[a].vy);
+            }
             // this is the normal up special move
             if (((keyNotCode[q]&&p[a].player===1)||(keyNotCode[period]&&p[a].player===0)||(keyNotCode[uu]&&p[a].player===2)||(p[a].cpu.at2))&&p[a].movecool<frameCount&&canDoUp) {
                 // special move codery
@@ -845,31 +848,36 @@ var draw = function() {
                     for (var b=0;b<p.length;b++) {
                         if (b!==a) {
                             if (coll(p[b].hitbox,p[a].hitbox)) {
-                                p[b].vy=2;
-                                if (p[a].vy>6&&p[b].y>p[a].y) {
-                                    p[b].y=p[a].y;
-                                    //p[b].y=p[a].hitbox.y-p[a].hitbox.h-p[b].hitbox.h;
-                                }
-                                    p[b].canjump=false;
-                                p[b].fall=true;
-                                if (characterData[p[b].char]!==undefined) {
-                                    p[b].vy*=p[b].hp/200+1+characterData[p[b].char].knockbackplus;
-                                    if (abs(p[a].vx)!==constrain(abs(p[a].vx),0.5,2)) {
-                                        var avgaround = 10;
-                        p[b].vx=(p[b].vx+p[a].vx*(avgaround-1))/avgaround;
+                                if (p[b].vy>-16) { // prevents everything except damage if the hit player is moving super fast downwards.
+                                    p[b].vy=2;
+                                    if (p[a].vy>6&&p[b].y>p[a].y) {
+                                        p[b].y=p[a].y;
+                                        //p[b].y=p[a].hitbox.y-p[a].hitbox.h-p[b].hitbox.h;
+                                    }
+                                        p[b].canjump=false;
+                                    p[b].fall=true;
+                                    if (characterData[p[b].char]!==undefined) {
+                                        p[b].vy*=p[b].hp/200+1+characterData[p[b].char].knockbackplus;
+                                        if (abs(p[a].vx)!==constrain(abs(p[a].vx),0.5,2)) {
+                                            var avgaround = 10;
+                            p[b].vx=(p[b].vx+p[a].vx*(avgaround-1))/avgaround;
+                                        }
+                                    } else {
+                                        p[b].vy*=p[b].hp/200+1+characterData[0].knockbackplus;
+                                        if (abs(p[a].vx)!==constrain(abs(p[a].vx),0.5,2)) {
+                                            var avgaround = 10;
+                                            p[b].vx=(p[b].vx+p[a].vx*(avgaround-1))/avgaround;
+                                        }
+                                    }
+                                    //p[b].vy*=p[b].hp/200+1;
+                                    if (p[a].vy===constrain(p[a].vy,0,4)) { 
+                                        p[b].movecool=frameCount+20;
+                                    } else {
+                                        p[b].movecool=frameCount+30;
                                     }
                                 } else {
-                                    p[b].vy*=p[b].hp/200+1+characterData[0].knockbackplus;
-                                    if (abs(p[a].vx)!==constrain(abs(p[a].vx),0.5,2)) {
-                                        var avgaround = 10;
-                                        p[b].vx=(p[b].vx+p[a].vx*(avgaround-1))/avgaround;
-                                    }
-                                }
-                                //p[b].vy*=p[b].hp/200+1;
-                                if (p[a].vy===constrain(p[a].vy,0,4)) { 
-                                    p[b].movecool=frameCount+20;
-                                } else {
-                                    p[b].movecool=frameCount+30;
+                                    p[a].movecool=frameCount+10;
+                                    p[a].vy=0;
                                 }
                                 p[b].hp+=max(floor(abs(p[a].vy))/20,0.1)+p[a].slamdown/16;
                                 p[b].hp=round(p[b].hp*10)/10;
@@ -941,8 +949,13 @@ var draw = function() {
                             }
                         } else if (p[a].char===2) { // nidorino up tilt codery
                             p[a].vy=0;
+                            var fakedir = (p[a].dir-0.5)*2;
+                            if (1===1) {
+                                fakedir*=-1; // makes it come off of dinorino's back rather than his horn
+                            }
                             particles=append(particles,{
-                                x: p[a].x+40,
+                                //x: p[a].x+40,
+                                x: p[a].x+24+fakedir*16,
                                 y: p[a].y+40,
                                 vx: (p[a].dir-0.5)*2*random(0.5,1.5),
                                 vy: random(3,4),
