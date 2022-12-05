@@ -676,7 +676,7 @@ var draw = function() {
                     }
                     repeatsImageGenerator(myImages[p[a].char][p[a].frame1][p[a].frame2],p[a].x+48,p[a].y,48,-48,p[a].colorvar);
                     if (p[a].hp>=100) {
-                        repeatsImageGenerator(myImages[p[a].char][p[a].frame1][p[a].frame2],p[a].x,p[a].y,48,myImages[p[a].char][p[a].frame1][p[a].frame2][0].length*3,color(255,0,0,min(p[a].hp-100,200)*(sin(frameCount*5/(180/PI))/2+0.5)));
+                        repeatsImageGenerator(myImages[p[a].char][p[a].frame1][p[a].frame2],p[a].x+48,p[a].y,48,myImages[p[a].char][p[a].frame1][p[a].frame2][0].length*-3,color(255,0,0,min(p[a].hp-100,200)*(sin(frameCount*5/(180/PI))/2+0.5)));
                     }
                 }
             }
