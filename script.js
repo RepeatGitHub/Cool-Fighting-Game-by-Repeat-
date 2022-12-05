@@ -1,6 +1,6 @@
 var programCode = function(processingInstance) {
     with (processingInstance) {
-      size(max(window.innerWidth-20,400), max(window.innerHeight-25,400)); 
+      size(max(window.innerWidth-15,400), max(window.innerHeight-25,400)); 
       frameRate(60);
         
       // Paste code from Khan Academy here:
@@ -245,6 +245,21 @@ var myImagees = globall.myImagees;
         //println(myImages===undefined);
         //println(globall.myImages===undefined);
 
+var bl = color(0, 0, 0);
+var wh = color(255, 255, 255);
+var rd = color(255, 0, 0);
+var bu = color(0, 0, 255);
+var wn = color(254, 255, 255);
+var g = {
+    a: color(175,175,175),
+    b: color(200,200,200),
+    c: color(220,220,220),
+    d: color(235,235,235),
+    e: color(245,245,245),
+    f: color(250,255,255),
+};
+var tbl = color(0,127);
+var twh = color(255,127);
 var repeatsImageGenerator = function(imgg,imgx,imgy,imglength,imgwidth,allfill) {
     noStroke();
     if (imgg===undefined||imgg===-999) {
@@ -1659,7 +1674,7 @@ var draw = function() {
             mous=true;
         }
         if (mous) {
-            text("just restart the project, this button does nothing sorry",200,300);
+            text("just reload the site, this button does nothing sorry",200,300);
         }
     }
     if (mode==="playerselect") {
