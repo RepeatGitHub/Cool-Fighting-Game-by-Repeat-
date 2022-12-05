@@ -1,6 +1,6 @@
 var programCode = function(processingInstance) {
     with (processingInstance) {
-      size(max(window.innerWidth-10,400), max(window.innerHeight-25,400)); 
+      size(max(window.innerWidth-20,400), max(window.innerHeight-25,400)); 
       frameRate(60);
         
       // Paste code from Khan Academy here:
@@ -513,12 +513,14 @@ var draw = function() {
         pushMatrix();
         if (width>height) {
             //translate((height-400)/2,0);
-            translate(height/2-100,0);
+            //translate(height/2-100,0);
+            translate(width/2-height/2,0);
             scale(height/400);
         } else {
             translate(0,height-width);
             scale(width/400);
         }
+        var burger1 = max((height-width)/(width/400),0);
         platformRender();
         var lasthp = [];
         for (var a=0;a<p.length;a++) {
@@ -1397,7 +1399,8 @@ var draw = function() {
             //image(get(p[a].x,p[a].y,48,48),p[a].x-24,p[a].y-24,96,96);
             //var burger1 = (max(height-400,1)/max(width-400,1))*400;
             //var burger1 = max((height-400)-(width-400),0);
-            var burger1 = max((height-width)*(160000/width),0);
+            //var burger1 = max((height-400)/(width/400),1);
+            // moved it up to the width/height area instead
             //var burger1 = max(height-400,1);
             //println(burger1);
             //fill(0);
