@@ -12,6 +12,16 @@
   <script src="https://cdn.jsdelivr.net/processing.js/1.4.8/processing.min.js"></script> 
   <script type="text/javascript" src="https://livejs.com/live.js"></script> <!-- copied from https://stackoverflow.com/questions/5588658/auto-reload-browser-when-i-save-changes-to-html-file-in-chrome -->
     <script type="text/javascript" src="global.js"></script>
+
+    <script>
+        function cb(response) {
+            globall.views=response.value;
+        };
+    </script>
+    <script src="https://api.countapi.xyz/hit/cool-fighting-game-by-repeat.repeatsalt.repl.co/visits?callback=cb" async></script>
+    
     <script type="text/javascript" src="module.js"></script>
     <script type="text/javascript" src="script.js"></script>
+
+    
 </html>

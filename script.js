@@ -1,7 +1,7 @@
 var programCode = function(processingInstance) {
     with (processingInstance) {
       size(max(window.innerWidth-15,400), max(window.innerHeight-25,400)); 
-      frameRate(60);
+      frameRate(60); println(`${globall.views}a`);
         
       // Paste code from Khan Academy here:
 // Note to self: Ian said I should:
@@ -2080,6 +2080,7 @@ keyPressed = function() {
     keyNotCode[key]=true;
 };
 keyReleased = function() {
+    console.log(keyCode, key);
     keys[keyCode]=false;
     keyNotCode[key]=false;
 };
