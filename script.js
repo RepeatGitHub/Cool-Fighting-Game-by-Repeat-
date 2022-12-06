@@ -332,7 +332,7 @@ var backgrond = function() {
         background(173, 173, 173);
     }
 };
-var showHitboxes = true;
+var showHitboxes = false;
 var platformRender = function() {
 if (stage===0) {
     platforms = [
