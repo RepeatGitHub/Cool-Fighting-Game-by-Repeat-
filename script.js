@@ -332,7 +332,7 @@ var backgrond = function() {
         background(173, 173, 173);
     }
 };
-var showHitboxes = false;
+var showHitboxes = true;
 var platformRender = function() {
 if (stage===0) {
     platforms = [
@@ -777,6 +777,7 @@ var draw = function() {
                     }
                 }
             } else {
+                // down special codery
                 if (p[a].frame1===8) {
                     if (characterData[p[a].char]!==undefined) {
                         if (characterData[p[a].char].downspecialmove) {
@@ -1380,6 +1381,22 @@ var draw = function() {
                         w: 29,
                         h: 28,
                     };
+                } else if (p[a].char===1) {
+                    if (p[a].frame2===0) {
+                        p[a].hitbox={
+                            x: p[a].x+12+(p[a].dir-0.5)+(p[a].dir)*-1,
+                            y: p[a].y+22,
+                            w: 24,
+                            h: 26,
+                        };
+                    } else {
+                        p[a].hitbox={
+                            x: p[a].x+6+(p[a].dir-0.5)+(p[a].dir)*-1,
+                            y: p[a].y+22,
+                            w: 36,
+                            h: 26,
+                        };
+                    }
                 } else if (p[a].char===3) {
                     p[a].hitbox={
                         x: p[a].x+12,
@@ -1644,7 +1661,7 @@ var draw = function() {
         rotate(-10*(PI/180));
         translate(-50,50);
         fill(207, 207, 207);
-        rect(0,0,500,50);
+        rect(0,0,700,50);
         fill(0, 0, 0);
         textAlign(LEFT,CENTER);
         var tempvar43 = [

@@ -689,6 +689,42 @@ myImages[1][7][3]=[
     [bl, wh, wh, wh, wh, wh, wh, bl, 'x','x',bl, bl, bl, bl, bl, bl],
     [bl, bl, bl, bl, bl, bl, bl, bl, 'x','x','x','x','x','x','x','x'],
 ];
+myImages[1][8][0]=[
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x','x','x',bl, bl, bl, bl, bl, bl, bl, bl, 'x','x','x','x'],
+    ['x','x','x','x',bl, wh, wh, wh, wh, wh, wh, bl, 'x','x','x','x'],
+    ['x','x','x','x',bl, wh, wh, bl, bl, bl, wh, bl, 'x','x','x','x'],
+    ['x','x','x','x',bl, wh, bl, wh, bl, wh, wh, bl, 'x','x','x','x'],
+    ['x','x','x','x',bl, wh, bl, bl, bl, bl, wh, bl, 'x','x','x','x'],
+    ['x','x','x','x',bl, wh, wh, wh, wh, wh, wh, bl, 'x','x','x','x'],
+    ['x','x','x','x',bl, bl, bl, bl, bl, bl, bl, bl, 'x','x','x','x'],
+];
+myImages[1][8][1]=[
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x',bl, bl, bl, bl, bl, bl, bl, bl, bl, bl, bl, bl, 'x','x'],
+    ['x','x',bl, wh, wh, wh, wh, wh, wh, wh, wh, wh, wh, bl, 'x','x'],
+    ['x','x',bl, wh, bl, bl, wh, bl, bl, bl, wh, bl, wh, bl, 'x','x'],
+    ['x','x',bl, wh, bl, bl, bl, wh, bl, wh, bl, bl, wh, bl, 'x','x'],
+    ['x','x',bl, wh, bl, bl, bl, bl, bl, bl, bl, bl, wh, bl, 'x','x'],
+    ['x','x',bl, wh, wh, wh, wh, wh, wh, wh, wh, wh, wh, bl, 'x','x'],
+    ['x','x',bl, bl, bl, bl, bl, bl, bl, bl, bl, bl, bl, bl, 'x','x'],
+];
 myImages[2]=[];
 myImages[2][69]=[
     ['x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
