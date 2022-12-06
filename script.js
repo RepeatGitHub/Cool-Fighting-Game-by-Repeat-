@@ -1,7 +1,7 @@
 var programCode = function(processingInstance) {
     with (processingInstance) {
       size(max(window.innerWidth-15,400), max(window.innerHeight-25,400)); 
-      frameRate(60); println(`${globall.views}a`);
+      frameRate(60); //println(`${globall.views}a`);
         
       // Paste code from Khan Academy here:
 // Note to self: Ian said I should:
@@ -2062,6 +2062,10 @@ var draw = function() {
             textSize(30);
             text("Select your level!",width/2,300+(height-400));
         }
+        fill(255);
+        textAlign(LEFT,TOP);
+        textSize(10);
+        text(globall.views+" views",5,5);
     }
     //mode="playerselect";
     //println(mode);
