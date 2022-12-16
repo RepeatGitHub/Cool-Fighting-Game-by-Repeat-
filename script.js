@@ -1397,6 +1397,13 @@ var draw = function() {
                             h: 26,
                         };
                     }
+                } else if (p[a].char===2) {
+                    p[a].hitbox={
+                        x: p[a].x+6+(p[a].dir-1)*6,
+                        y: p[a].y+21,
+                        w: 42,
+                        h: 27,
+                    };
                 } else if (p[a].char===3) {
                     p[a].hitbox={
                         x: p[a].x+12,
