@@ -1049,6 +1049,7 @@ myImages[3][5]=[];
 myImages[3][6]=[];
 myImages[3][7]=[];
 myImages[3][8]=[];
+myImages[3][9]=[];
 myImages[3][0][0]=[
     ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
     ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
@@ -1484,6 +1485,9 @@ myImages[3][7][8]=[
 ];
 myImages[3][8][0]=myImages[3][2][0];
 myImages[3][8][1]=myImages[3][2][0];
+myImages[3][9][0]=myImages[3][2][0];
+myImages[3][9][1]=myImages[3][2][0];
+    
 // }
     if (myImages!==undefined) {
         return myImages;

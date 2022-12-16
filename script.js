@@ -58,6 +58,7 @@ var characterData = [ // Default goes to 0 if I forgot to place my data for othe
         downspecialmove: false,
         downspecialmaxdmg: 0.2,
         meleeFox: false, // I mentioned this below, but this feature re-enables the Melee Fox glitch, which I turned into a feature for modders and future me.
+        chargeAttackCheese: false, // Pretty much, this makes it so that pressing the charge attack removes any horizontal knockback.
     },
     {
         jumpheight: 4,
@@ -68,6 +69,7 @@ var characterData = [ // Default goes to 0 if I forgot to place my data for othe
         downspecialmove: false,
         downspecialmaxdmg: 0.3,
         meleeFox: false,
+        chargeAttackCheese: false,
     },
     {
         jumpheight: 4,
@@ -77,6 +79,7 @@ var characterData = [ // Default goes to 0 if I forgot to place my data for othe
         downspecialmove: false,
         downspecialmaxdmg: 0.1,
         meleeFox: false,
+        chargeAttackCheese: false,
     },
     {
         jumpheight: 4,
@@ -87,6 +90,7 @@ var characterData = [ // Default goes to 0 if I forgot to place my data for othe
         downspecialmove: true,
         downspecialmaxdmg: 0.2,
         meleeFox: false,
+        chargeAttackCheese: false,
     },
 ];
 var cpu1="cpu1";
@@ -1051,6 +1055,13 @@ var draw = function() {
                         w: 42,
                         h: 27,
                     };
+                } else if (p[a].char===3) {
+                    p[a].hitbox={
+                        x: p[a].hitbox.x+0,
+                        y: p[a].hitbox.y+0,
+                        w: p[a].hitbox.w+0,
+                        h: p[a].hitbox.h+0,
+                    }
                 }
             }
             var ff = "f";
@@ -1083,6 +1094,13 @@ var draw = function() {
                     p[a].frame1=0;
                     p[a].frame2=0;
                 }
+                //var deConstrainify = function(input,min,max,too) {
+                //    if (input!==constrain(input,min,max)) {
+                //        return input;
+                //    } else {
+                //        return too;
+                //    }
+                //};
                 if ((p[a].frame2===3&&p[a].char!==2&&p[a].char!==3)||(p[a].char===3&&p[a].frame2===8)) {
                     if (p[a].char===3) {
                         if (p[a].dir===1) {
@@ -1132,13 +1150,14 @@ var draw = function() {
                             }
                         }
                     }
-                } else if (p[a].char!==2&&p[a].char!==3) {
+                } else if (p[a].char!==2&&p[a].char!==3&&((p[a].movecool<frameCount&&!characterData[p[a].char].chargeAttackCheese)||characterData[p[a].char].chargeAttackCheese))) {
                     if (p[a].dir===1) {
+                        //p[a].vx=deConstrainify(p[a].vx,-3,3,0.5*p[a].frame2);
                         p[a].vx=0.5*p[a].frame2;
                     } else {
                         p[a].vx=-0.5*p[a].frame2;
                     }
-                } else if (p[a].char===3) {
+                } else if (p[a].char===3&&((p[a].movecool<frameCount&&!characterData[p[a].char].chargeAttackCheese)||characterData[p[a].char].chargeAttackCheese)) {
                     if (p[a].dir===1) {
                         p[a].vx=-0.25*min(p[a].frame2,2);
                     } else {
