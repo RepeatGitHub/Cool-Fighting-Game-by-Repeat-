@@ -440,7 +440,7 @@ if (stage===2) {
             if (platforms[a].type==="solid") {
                 fill(platforms[a].color);
                 rect(platforms[a].x,platforms[a].y,platforms[a].w,platforms[a].h);
-                if (coll(platforms[a],p[b].hitbox)) {
+                if (coll(platforms[a],p[b].hitbox)&&!(p[b].char===3&&p[b].frame1===4)) {
                     //if (p[b].vy<0) {
                         p[b].vy=0;
                         if (abs(platforms[a].y-48-p[b].y)<20) {
@@ -1056,12 +1056,11 @@ var draw = function() {
                         h: 27,
                     };
                 } else if (p[a].char===3) {
-                    p[a].hitbox={
-                        x: p[a].hitbox.x+0,
-                        y: p[a].hitbox.y+0,
-                        w: p[a].hitbox.w+0,
-                        h: p[a].hitbox.h+0,
-                    }
+                    p[a].fall=true;
+                    p[a].hitbox.x-=p[a].vx/2;
+                    p[a].hitbox.y+=p[a].vy/2;
+                    fill(0,100);
+                    rect(p[a].hitbox.x,p[a].hitbox.y,p[a].hitbox.w,p[a].hitbox.h);
                 }
             }
             var ff = "f";
@@ -1150,7 +1149,7 @@ var draw = function() {
                             }
                         }
                     }
-                } else if (p[a].char!==2&&p[a].char!==3&&((p[a].movecool<frameCount&&!characterData[p[a].char].chargeAttackCheese)||characterData[p[a].char].chargeAttackCheese))) {
+                } else if (p[a].char!==2&&p[a].char!==3&&((p[a].movecool<frameCount&&!characterData[p[a].char].chargeAttackCheese)||characterData[p[a].char].chargeAttackCheese)) {
                     if (p[a].dir===1) {
                         //p[a].vx=deConstrainify(p[a].vx,-3,3,0.5*p[a].frame2);
                         p[a].vx=0.5*p[a].frame2;
