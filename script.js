@@ -57,8 +57,10 @@ var characterData = [ // Default goes to 0 if I forgot to place my data for othe
         knockbackplus: 0,
         downspecialmove: false,
         downspecialmaxdmg: 0.2,
+        downspeciallaunch: 1, // How far up an up tilt sends the opponent. Lower is better, but below 0 does nearly nothing unless set to an extremely low number like -100.
         meleeFox: false, // I mentioned this below, but this feature re-enables the Melee Fox glitch, which I turned into a feature for modders and future me.
         chargeAttackCheese: false, // Pretty much, this makes it so that pressing the charge attack removes any horizontal knockback.
+        pogo: true, // Makes the down special do a "pogo" like Fatal Book. Inspired by Hollow Knight.
     },
     {
         jumpheight: 4,
@@ -68,8 +70,10 @@ var characterData = [ // Default goes to 0 if I forgot to place my data for othe
         knockbackplus: 0.1,
         downspecialmove: false,
         downspecialmaxdmg: 0.3,
+        downspeciallaunch: 1,
         meleeFox: false,
         chargeAttackCheese: false,
+        pogo: true,
     },
     {
         jumpheight: 4,
@@ -78,8 +82,10 @@ var characterData = [ // Default goes to 0 if I forgot to place my data for othe
         knockbackplus: 0,
         downspecialmove: false,
         downspecialmaxdmg: 0.1,
+        downspeciallaunch: 1,
         meleeFox: false,
         chargeAttackCheese: false,
+        pogo: true,
     },
     {
         jumpheight: 4,
@@ -89,8 +95,10 @@ var characterData = [ // Default goes to 0 if I forgot to place my data for othe
         knockbackplus: 0,
         downspecialmove: true,
         downspecialmaxdmg: 0.2,
+        downspeciallaunch: 2,
         meleeFox: false,
         chargeAttackCheese: false,
+        pogo: true,
     },
 ];
 var cpu1="cpu1";
@@ -777,7 +785,10 @@ var draw = function() {
                         p[a].frame1=8;
                         p[a].frame2=0;
                     } else { // aerial
-                        
+                        if (p[a].char===3) { // temporary code to prevent any characters but Fatal Book from doing this
+                        p[a].frame1=9;
+                        p[a].frame2=1;
+                        }
                     }
                 }
             } else {
@@ -794,7 +805,11 @@ var draw = function() {
                             if (b!==a) {
                                 if (coll(p[b].hitbox,p[a].hitbox)) {
                                     p[b].vx=(p[a].dir-0.5)*4;
-                                    p[b].vy=1;
+                                    if (characterData[p[a].char]!==undefined) {
+                                        p[b].vy=characterData[p[a].char].downspeciallaunch;
+                                    } else {
+                                        p[b].vy=1;
+                                    }
                                     p[b].y-=1;
                                     p[b].fall=true;
                                     if (characterData[p[b].char]!==undefined) {
@@ -810,7 +825,7 @@ var draw = function() {
                                     } else {
                                         dmggg=characterData[0].downspecialmaxdmg;
                                     }
-                                    p[b].hp+=random(0.1,0.2);
+                                    p[b].hp+=random(0.1,dmggg);
                                     p[b].canjump=false;
                                     //println(p[b].hp);
                                     p[b].hp=round(p[b].hp*10)/10;
@@ -823,8 +838,34 @@ var draw = function() {
                         p[a].frame2=0;
                     }
                     if (frameCount-floor(frameCount/8)*8>=7) {
-                        p[a].frame1=0;
+                        if (((keys[DOWN]&&p[a].player===0)||(keyNotCode[ss]&&p[a].player===1)||(keyNotCode[kk]&&p[a].player===2)||(p[a].cpu.down))&&((keyNotCode[q]&&p[a].player===1)||(keyNotCode[period]&&p[a].player===0)||(keyNotCode[uu]&&p[a].player===2)||(p[a].cpu.at2))&&p[a].movecool<frameCount) {} else {
+                            p[a].frame1=0;
+                        }
                         p[a].frame2=0;
+                    }
+                }
+                // aerial down special codery
+                if (p[a].frame1===9) {
+                    frameSpeed=8;
+                    for (var b=0;b<p.length;b++) {
+                        if (b!==a) {
+                            if (coll(p[b].hitbox,p[a].hitbox)) {
+                                p[b].movecool=10+frameCount;
+                                p[b].frame1=5;
+                                p[b].frame2=0;
+                                p[b].canjump=false;
+                                p[b].hp+=0.5;
+                                p[b].vy=-4;
+                                if (characterData[p[a].char]!==undefined) {
+                                    if (characterData[p[a].char].pogo) {
+                                        p[b].vy=2;
+                                    }
+                                }
+                            }
+                        }
+                        if (p[a].frame2===0) {
+                            p[a].frame1=0;
+                        }
                     }
                 }
             }

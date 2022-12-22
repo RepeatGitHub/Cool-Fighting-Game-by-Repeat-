@@ -1485,8 +1485,29 @@ myImages[3][7][8]=[
 ];
 myImages[3][8][0]=myImages[3][2][0];
 myImages[3][8][1]=myImages[3][2][0];
-myImages[3][9][0]=myImages[3][2][0];
-myImages[3][9][1]=myImages[3][2][0];
+//myImages[3][9][0]=myImages[3][2][0];
+//myImages[3][9][1]=myImages[3][2][0];
+myImages[3][9][0]=myImages[3][0][0]; // frame1=9 and frame2=0 is a placeholder image, it doesn't need to be fleshed out.
+myImages[3][9][1]=myImages[3][0][0];
+myImages[3][9][2]=[
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'],
+    ['x','x','x','x','x',bl, bl, bl, bl, bl, bl, 'x','x','x','x','x'],
+    ['x','x','x','x','x',bl, wh, wh, bl, g.a,bl, 'x','x','x','x','x'],
+    ['x','x','x','x','x',bl, wh, wh, bl, g.b,bl, 'x','x','x','x','x'],
+    ['x','x','x','x','x',bl, wh, wh, bl, g.c,bl, 'x','x','x','x','x'],
+    ['x','x','x','x','x',bl, wh, wh, bl, g.d,bl, 'x','x','x','x','x'],
+    ['x','x','x','x','x',bl, wh, wh, bl, g.e,bl, 'x','x','x','x','x'],
+    ['x','x','x','x','x',bl, wh, wh, bl, g.f,bl, 'x','x','x','x','x'],
+    ['x','x','x','x',bl, bl, bl, bl, bl, bl, bl, bl, 'x','x','x','x'],
+    ['x','x','x','x',bl, wn, bl, wn, wn, bl, wn, bl, 'x','x','x','x'],
+    ['x','x','x','x','x',bl, 'x',bl, bl, 'x',bl, 'x','x','x','x','x'],
+];
+myImages[3][9][3]=myImages[3][9][2];
     
 // }
     if (myImages!==undefined) {
