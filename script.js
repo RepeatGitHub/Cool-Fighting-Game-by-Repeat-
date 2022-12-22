@@ -57,10 +57,10 @@ var characterData = [ // Default goes to 0 if I forgot to place my data for othe
         knockbackplus: 0,
         downspecialmove: false,
         downspecialmaxdmg: 0.2,
-        downspeciallaunch: 1, // How far up an up tilt sends the opponent. Lower is better, but below 0 does nearly nothing unless set to an extremely low number like -100.
+        downspeciallaunch: 1, // How far up an down special sends the opponent. Lower is better, but below 0 does nearly nothing unless set to an extremely low number like -100.
         meleeFox: false, // I mentioned this below, but this feature re-enables the Melee Fox glitch, which I turned into a feature for modders and future me.
         chargeAttackCheese: false, // Pretty much, this makes it so that pressing the charge attack removes any horizontal knockback.
-        pogo: true, // Makes the down special do a "pogo" like Fatal Book. Inspired by Hollow Knight.
+        pogo: false, // Makes the aerial down special do a "pogo" like Fatal Book. Inspired by Hollow Knight.
     },
     {
         jumpheight: 4,
@@ -73,7 +73,7 @@ var characterData = [ // Default goes to 0 if I forgot to place my data for othe
         downspeciallaunch: 1,
         meleeFox: false,
         chargeAttackCheese: false,
-        pogo: true,
+        pogo: false,
     },
     {
         jumpheight: 4,
@@ -85,7 +85,7 @@ var characterData = [ // Default goes to 0 if I forgot to place my data for othe
         downspeciallaunch: 1,
         meleeFox: false,
         chargeAttackCheese: false,
-        pogo: true,
+        pogo: false,
     },
     {
         jumpheight: 4,
@@ -712,7 +712,8 @@ var draw = function() {
             var jj = "g";
             var kk = "h";
             var ll = "j";
-            if (((keys[RIGHT]&&!keys[LEFT]&&!keys[DOWN]&&p[a].player===0)||((keyNotCode[dd]||keyNotCode[dd.toUpperCase()])&&!keyNotCode[aa]&&!keyNotCode[aa.toUpperCase()]&&!keyNotCode[ss]&&!keyNotCode[ss.toUpperCase()]&&p[a].player===1)||((keyNotCode[ll]||keyNotCode[ll.toUpperCase()])&&!keyNotCode[jj]&&!keyNotCode[jj.toUpperCase()]&&!keyNotCode[kk]&&!keyNotCode[kk.toUpperCase()]&&p[a].player===2)||(p[a].cpu.right&&!p[a].cpu.left&&!p[a].cpu.down))&&p[a].movecool<frameCount) {
+            //if (((keys[RIGHT]&&!keys[LEFT]&&!keys[DOWN]&&p[a].player===0)||((keyNotCode[dd]||keyNotCode[dd.toUpperCase()])&&!keyNotCode[aa]&&!keyNotCode[aa.toUpperCase()]&&!keyNotCode[ss]&&!keyNotCode[ss.toUpperCase()]&&p[a].player===1)||((keyNotCode[ll]||keyNotCode[ll.toUpperCase()])&&!keyNotCode[jj]&&!keyNotCode[jj.toUpperCase()]&&!keyNotCode[kk]&&!keyNotCode[kk.toUpperCase()]&&p[a].player===2)||(p[a].cpu.right&&!p[a].cpu.left&&!p[a].cpu.down))&&p[a].movecool<frameCount) {
+            if (((keys[RIGHT]&&!keys[LEFT]&&p[a].player===0)||((keyNotCode[dd]||keyNotCode[dd.toUpperCase()])&&!keyNotCode[aa]&&!keyNotCode[aa.toUpperCase()]&&p[a].player===1)||((keyNotCode[ll]||keyNotCode[ll.toUpperCase()])&&!keyNotCode[jj]&&!keyNotCode[jj.toUpperCase()]&&p[a].player===2)||(p[a].cpu.right&&!p[a].cpu.left))&&p[a].movecool<frameCount&&p[a].frame1!==2) {
                 if (p[a].frame1===6) {
                     p[a].vx=2;
                 } else {
@@ -721,11 +722,8 @@ var draw = function() {
                 }
                 p[a].dir=1;
             }
-            if (p[a].movecool>frameCount) {
-                p[a].frame1=5;
-                p[a].frame2=0;
-            }
-            if (((keys[LEFT]&&!keys[RIGHT]&&!keys[DOWN]&&p[a].player===0)||((keyNotCode[aa]||keyNotCode[aa.toUpperCase()])&&!keyNotCode[dd]&&!keyNotCode[dd.toUpperCase()]&&!keyNotCode[ss]&&!keyNotCode[ss.toUpperCase()]&&p[a].player===1)||((keyNotCode[jj]||keyNotCode[jj.toUpperCase()])&&!keyNotCode[ll]&&!keyNotCode[ll.toUpperCase()]&&!keyNotCode[kk]&&!keyNotCode[kk.toUpperCase()]&&p[a].player===2)||(p[a].cpu.left&&!p[a].cpu.right&&!p[a].cpu.down))&&p[a].movecool<frameCount) {
+            //if (((keys[LEFT]&&!keys[RIGHT]&&!keys[DOWN]&&p[a].player===0)||((keyNotCode[aa]||keyNotCode[aa.toUpperCase()])&&!keyNotCode[dd]&&!keyNotCode[dd.toUpperCase()]&&!keyNotCode[ss]&&!keyNotCode[ss.toUpperCase()]&&p[a].player===1)||((keyNotCode[jj]||keyNotCode[jj.toUpperCase()])&&!keyNotCode[ll]&&!keyNotCode[ll.toUpperCase()]&&!keyNotCode[kk]&&!keyNotCode[kk.toUpperCase()]&&p[a].player===2)||(p[a].cpu.left&&!p[a].cpu.right&&!p[a].cpu.down))&&p[a].movecool<frameCount) {
+            if (((keys[LEFT]&&!keys[RIGHT]&&p[a].player===0)||((keyNotCode[aa]||keyNotCode[aa.toUpperCase()])&&!keyNotCode[dd]&&!keyNotCode[dd.toUpperCase()]&&p[a].player===1)||((keyNotCode[jj]||keyNotCode[jj.toUpperCase()])&&!keyNotCode[ll]&&!keyNotCode[ll.toUpperCase()]&&p[a].player===2)||(p[a].cpu.left&&!p[a].cpu.right))&&p[a].movecool<frameCount&&p[a].frame1!==2) {
                 if (p[a].frame1===6) {
                     p[a].vx=-2;
                 } else {
@@ -734,7 +732,7 @@ var draw = function() {
                 }
                 p[a].dir=0;
             }
-            if (((keys[DOWN]&&p[a].player===0)||(keyNotCode[ss]&&p[a].player===1)||(keyNotCode[kk]&&p[a].player===2)||(p[a].cpu.down))&&p[a].movecool<frameCount) {
+            if (((keys[DOWN]&&p[a].player===0)||(keyNotCode[ss]&&p[a].player===1)||(keyNotCode[kk]&&p[a].player===2)||(p[a].cpu.down))&&p[a].movecool<frameCount&&p[a].frame1!==8&&p[a].frame1!==9) {
                 if (characterData[p[a].char]!==undefined) {
                     p[a].vx*=characterData[p[a].char].downslide;
                 } else {
@@ -849,16 +847,19 @@ var draw = function() {
                     frameSpeed=8;
                     for (var b=0;b<p.length;b++) {
                         if (b!==a) {
-                            if (coll(p[b].hitbox,p[a].hitbox)) {
-                                p[b].movecool=10+frameCount;
-                                p[b].frame1=5;
-                                p[b].frame2=0;
-                                p[b].canjump=false;
-                                p[b].hp+=0.5;
-                                p[b].vy=-4;
+                            if (coll(p[b].hitbox,p[a].hitbox)&&p[a].frame2>1) {
+                                if (p[b].movecool<frameCount) {
+                                    p[b].movecool=10+frameCount;
+                                    p[b].frame1=5;
+                                    p[b].frame2=0;
+                                    p[b].canjump=false;
+                                    p[b].hp+=floor(random(5,8)*10)/10;
+                                    p[b].vy=-4;
+                                    p[b].y-=1;
+                                }
                                 if (characterData[p[a].char]!==undefined) {
                                     if (characterData[p[a].char].pogo) {
-                                        p[b].vy=2;
+                                        p[a].vy=2;
                                     }
                                 }
                             }
@@ -1471,6 +1472,10 @@ var draw = function() {
                         h: 12,
                     };
                 }
+            }
+            if (p[a].movecool>frameCount) { // ouch codery
+                p[a].frame1=5;
+                p[a].frame2=0;
             }
             if (p[a].frame1===1) {
                 frameSpeed=20-ceil(abs(p[a].vx)*3);
