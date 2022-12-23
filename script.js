@@ -849,17 +849,22 @@ var draw = function() {
                         if (b!==a) {
                             if (coll(p[b].hitbox,p[a].hitbox)&&p[a].frame2>1) {
                                 if (p[b].movecool<frameCount) {
-                                    p[b].movecool=10+frameCount;
+                                    p[b].movecool=30+frameCount;
                                     p[b].frame1=5;
                                     p[b].frame2=0;
                                     p[b].canjump=false;
-                                    p[b].hp+=floor(random(5,8)*10)/10;
-                                    p[b].vy=-4;
+                                    p[b].hp+=floor(random(4,7)*10)/10;
+                                    if (p[b].vy!==0) {
+                                        p[b].vy=-4;
+                                    } else {
+                                        p[b].vy=4;
+                                    }
                                     p[b].y-=1;
                                 }
                                 if (characterData[p[a].char]!==undefined) {
-                                    if (characterData[p[a].char].pogo) {
+                                    if (characterData[p[a].char].pogo&&p[b].vy>0) {
                                         p[a].vy=2;
+                                        p[a].y-=1;
                                     }
                                 }
                             }
