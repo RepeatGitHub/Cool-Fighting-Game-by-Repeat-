@@ -658,6 +658,11 @@ var draw = function() {
                 rect(p[a].hitbox.x,p[a].hitbox.y,p[a].hitbox.w,p[a].hitbox.h);
                 colorMode(RGB);
             }
+            // Putting this right above the Render Players section guarantees that being in ouch frames causes ouch.
+            if (p[a].movecool>frameCount) { // ouch codery
+                p[a].frame1=5;
+                p[a].frame2=0;
+            }
             // Render players
             textAlign(CENTER,CENTER);
             textSize(15);
@@ -1477,10 +1482,6 @@ var draw = function() {
                         h: 12,
                     };
                 }
-            }
-            if (p[a].movecool>frameCount) { // ouch codery
-                p[a].frame1=5;
-                p[a].frame2=0;
             }
             if (p[a].frame1===1) {
                 frameSpeed=20-ceil(abs(p[a].vx)*3);
