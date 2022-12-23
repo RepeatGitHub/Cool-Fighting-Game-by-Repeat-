@@ -719,7 +719,7 @@ var draw = function() {
             var ll = "j";
             //if (((keys[RIGHT]&&!keys[LEFT]&&!keys[DOWN]&&p[a].player===0)||((keyNotCode[dd]||keyNotCode[dd.toUpperCase()])&&!keyNotCode[aa]&&!keyNotCode[aa.toUpperCase()]&&!keyNotCode[ss]&&!keyNotCode[ss.toUpperCase()]&&p[a].player===1)||((keyNotCode[ll]||keyNotCode[ll.toUpperCase()])&&!keyNotCode[jj]&&!keyNotCode[jj.toUpperCase()]&&!keyNotCode[kk]&&!keyNotCode[kk.toUpperCase()]&&p[a].player===2)||(p[a].cpu.right&&!p[a].cpu.left&&!p[a].cpu.down))&&p[a].movecool<frameCount) {
             if (((keys[RIGHT]&&!keys[LEFT]&&p[a].player===0)||((keyNotCode[dd]||keyNotCode[dd.toUpperCase()])&&!keyNotCode[aa]&&!keyNotCode[aa.toUpperCase()]&&p[a].player===1)||((keyNotCode[ll]||keyNotCode[ll.toUpperCase()])&&!keyNotCode[jj]&&!keyNotCode[jj.toUpperCase()]&&p[a].player===2)||(p[a].cpu.right&&!p[a].cpu.left))&&p[a].movecool<frameCount&&p[a].frame1!==2) {
-                if (p[a].frame1===6) {
+                if (p[a].frame1===6||p[a].frame1===9) { // nice
                     p[a].vx=2;
                 } else {
                     p[a].frame1=1;
@@ -729,7 +729,7 @@ var draw = function() {
             }
             //if (((keys[LEFT]&&!keys[RIGHT]&&!keys[DOWN]&&p[a].player===0)||((keyNotCode[aa]||keyNotCode[aa.toUpperCase()])&&!keyNotCode[dd]&&!keyNotCode[dd.toUpperCase()]&&!keyNotCode[ss]&&!keyNotCode[ss.toUpperCase()]&&p[a].player===1)||((keyNotCode[jj]||keyNotCode[jj.toUpperCase()])&&!keyNotCode[ll]&&!keyNotCode[ll.toUpperCase()]&&!keyNotCode[kk]&&!keyNotCode[kk.toUpperCase()]&&p[a].player===2)||(p[a].cpu.left&&!p[a].cpu.right&&!p[a].cpu.down))&&p[a].movecool<frameCount) {
             if (((keys[LEFT]&&!keys[RIGHT]&&p[a].player===0)||((keyNotCode[aa]||keyNotCode[aa.toUpperCase()])&&!keyNotCode[dd]&&!keyNotCode[dd.toUpperCase()]&&p[a].player===1)||((keyNotCode[jj]||keyNotCode[jj.toUpperCase()])&&!keyNotCode[ll]&&!keyNotCode[ll.toUpperCase()]&&p[a].player===2)||(p[a].cpu.left&&!p[a].cpu.right))&&p[a].movecool<frameCount&&p[a].frame1!==2) {
-                if (p[a].frame1===6) {
+                if (p[a].frame1===6||p[a].frame1===9) { // nice
                     p[a].vx=-2;
                 } else {
                     p[a].frame1=1;
