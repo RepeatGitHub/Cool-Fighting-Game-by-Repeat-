@@ -1747,6 +1747,9 @@ var draw = function() {
                 rect(0-a*20,0,-1*width,height);
                 rect(400+a*20,0,width,height);
             }
+            fill(0);
+            rect(-80,0,-1*width,height);
+            rect(480,0,width,height);
         }
         popMatrix();
     }
