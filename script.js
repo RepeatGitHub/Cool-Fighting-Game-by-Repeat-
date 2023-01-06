@@ -1744,8 +1744,8 @@ var draw = function() {
         if (width>height) {
             fill(0,100);
             for (var a=0;a<4;a++) {
-                rect(0-a*20,0,-1*width,height);
-                rect(400+a*20,0,width,height);
+                rect(0-a*20,0,-80,height); //-1*width
+                rect(400+a*20,0,80,height); //width
             }
             fill(0);
             rect(-80,0,-1*width,height);
