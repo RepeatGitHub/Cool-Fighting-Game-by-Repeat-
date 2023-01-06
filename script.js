@@ -311,6 +311,21 @@ var repeatsImageGenerator = function(imgg,imgx,imgy,imglength,imgwidth,allfill) 
                         } else {
                             fill(imgg[a][b]);
                         }
+                    } else if (allfill===3) {
+                        var rainbow = [255*max(0,1-dist(cos(2*PI/3),sin(2*PI/3),cos(frameCount/50),sin(frameCount/50))/2),255*max(0,1-dist(cos(4*PI/3),sin(4*PI/3),cos(frameCount/50),sin(frameCount/50))/2),255*max(0,1-dist(1,0,cos(frameCount/50),sin(frameCount/50))/2)];
+                        if (imgg[a][b]===color(255, 255, 255)) {
+                            //fill(noise(a/8,b/8,frameCount/10)*255, 100, 100);
+                            //fill(255*max(0,1-dist(cos(2*PI/3),sin(2*PI/3),cos(frameCount/50),sin(frameCount/50))/2),255*max(0,1-dist(cos(4*PI/3),sin(4*PI/3),cos(frameCount/50),sin(frameCount/50))/2),255*max(0,1-dist(1,0,cos(frameCount/50),sin(frameCount/50))/2));
+                            fill(rainbow[0],rainbow[1],rainbow[2]);
+                        } else if (imgg[a][b]===rd) {
+                            fill(rainbow[1],rainbow[2],rainbow[0]);
+                        } else if (imgg[a][b]===bl) {
+                            fill(rainbow[0]/8,rainbow[1]/8,rainbow[2]/8);
+                        } else if (imgg[a][b]===bu) {
+                            fill(rainbow[2],rainbow[0],rainbow[1]);
+                        } else {
+                            fill(imgg[a][b]);
+                        }
                     } else {
                         fill(allfill);
                     }
@@ -2043,7 +2058,7 @@ var draw = function() {
         rect(170,10,20,20);
         if (mousePresssed&&mouseY<40&&mouseX>80&&!mous) {
             mous=true;
-            if (mouseX<width/2) {
+            if (mouseX<80+40*4) {
                 modeStats.colorvar=floor(mouseX/40)-2;
             }
         }
