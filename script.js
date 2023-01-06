@@ -1682,6 +1682,12 @@ var draw = function() {
                     if (p[a].canjump) {
                         grid[2][1]=3;
                         grid[0][1]=3;
+                        grid[0][2]=2;
+                        if (p[a].char===2) {
+                            if (p[a].frame1!==5&&(frameCount===floor(frameCount/40)*40||frameCount-floor(frameCount/40)*40>35)) {
+                                grid[0][2]=2.5;
+                            }
+                        }
                     } else {
                         if (p[a].frame1===6) {
                             grid[0][1]=1;
@@ -1689,6 +1695,15 @@ var draw = function() {
                             grid[0][1]=4;
                         }
                         grid[2][1]=1;
+                        grid[0][2]=1;
+                        if (p[a].char!==2) {
+                            if (p[a].char===3) { // temp
+                            grid[0][2]=3;
+                            }
+                        } else if (p[a].frame1!==5&&(frameCount===floor(frameCount/40)*40||frameCount-floor(frameCount/40)*40>35)) {
+                            grid[0][2]=3;
+                        }
+                        //println(frameCount-floor(frameCount/80)*80);
                     }
                     for (var c=0;c<3;c++) {
                         for (var d=0;d<3;d++) {
@@ -1700,6 +1715,9 @@ var draw = function() {
                             }
                             if (grid[c][d]===2) {
                                 fill(255,255,0);
+                            }
+                            if (grid[c][d]===2.5) {
+                                fill(127,255,0);
                             }
                             if (grid[c][d]===3) {
                                 fill(0,255,0);
