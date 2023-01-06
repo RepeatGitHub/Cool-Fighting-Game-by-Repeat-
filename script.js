@@ -588,6 +588,15 @@ var draw = function() {
             }
         }
         for (var a=0;a<p.length;a++) {
+            var nidorinoProjectileColor=color(255,0,255);
+            if (p[a].char===2) {
+                if (p[a].colorvar===0) {
+                    nidorinoProjectileColor=color(0,0,255);
+                }
+                if (p[a].colorvar===2) {
+                    nidorinoProjectileColor=color(0,200,0);
+                }
+            }
             if (p[a].player==="cpu1") {
                 cpuAct(a);
             }
@@ -817,7 +826,7 @@ var draw = function() {
                                     vy: p[a].vy-1,
                                     opacity: 255,
                                     owner: a,
-                                    colorr: color(255, 0, 255),
+                                    colorr: color(nidorinoProjectileColor),
                                     size: 15,
                                 });
                             }
@@ -1052,7 +1061,7 @@ var draw = function() {
                                 vy: random(3,4),
                                 opacity: 255,
                                 owner: a,
-                                colorr: color(255, 0, 255),
+                                colorr: color(nidorinoProjectileColor),
                                 size: floor(random(10,16)),
                             });
                         }
@@ -1159,7 +1168,7 @@ var draw = function() {
                                 vy: p[a].vy-2,
                                 opacity: 255,
                                 owner: a,
-                                colorr: color(255, 0, 255),
+                                colorr: color(nidorinoProjectileColor),
                                 size: 5,
                             });
                         }
@@ -1277,7 +1286,7 @@ var draw = function() {
                             vy: 0,
                             opacity: 255,
                             owner: a,
-                            colorr: color(255, 0, 255),
+                            colorr: color(nidorinoProjectileColor),
                             size: 10,
                         });
                         particles=append(particles,{
@@ -1287,7 +1296,7 @@ var draw = function() {
                             vy: 0,
                             opacity: 255,
                             owner: a,
-                            colorr: color(255, 0, 255),
+                            colorr: color(nidorinoProjectileColor),
                             size: 10,
                         });
                         particles=append(particles,{
@@ -1297,7 +1306,7 @@ var draw = function() {
                             vy: 3,
                             opacity: 255,
                             owner: a,
-                            colorr: color(255, 0, 255),
+                            colorr: color(nidorinoProjectileColor),
                             size: 10,
                         });
                         particles=append(particles,{
@@ -1307,7 +1316,7 @@ var draw = function() {
                             vy: 3,
                             opacity: 255,
                             owner: a,
-                            colorr: color(255, 0, 255),
+                            colorr: color(nidorinoProjectileColor),
                             size: 10,
                         });
                         p[a].frame1=0;
