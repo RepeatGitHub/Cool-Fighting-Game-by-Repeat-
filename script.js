@@ -1742,9 +1742,11 @@ var draw = function() {
         }
         //println(key);
         if (width>height) {
-            fill(0);
+            fill(0,100);
             rect(0,0,-1*width,height);
             rect(400,0,width,height);
+            rect(-72,0,-1*width,height);
+            rect(465,0,width,height);
         }
         popMatrix();
     }
