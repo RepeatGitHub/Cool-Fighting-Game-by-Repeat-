@@ -1743,10 +1743,10 @@ var draw = function() {
         //println(key);
         if (width>height) {
             fill(0,100);
-            rect(0,0,-1*width,height);
-            rect(400,0,width,height);
-            rect(-72,0,-1*width,height);
-            rect(465,0,width,height);
+            for (var a=0;a<4;a++) {
+                rect(0-a*20,0,-1*width,height);
+                rect(400+a*20,0,width,height);
+            }
         }
         popMatrix();
     }
