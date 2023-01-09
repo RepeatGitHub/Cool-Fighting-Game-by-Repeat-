@@ -199,7 +199,7 @@ var particles = [
         y: 0,
         vx: 0,
         vy: 0,
-        opacity: 255,
+        opacity: 0,
         owner: "none",
         colorr: color(200),
         size: 10,
@@ -531,13 +531,18 @@ var cpuAct = function(playernum) {
             if (coll(p[a].hitbox,p[playernum].hitbox)) {
                 
             } else {
-                if (p[a].y>p[playernum].y) {
+                if (p[a].y>p[playernum].y+40) {
+                    //println(p[a].y-p[playernum].y);
                     if (p[playernum].fall) {
-                        p[playernum].cpu.at2=true;
+                        if (p[a].y>p[playernum].y) {
+                            p[playernum].cpu.at2=true;
+                        }
                     } else {
                         p[playernum].cpu.at2=false;
-                        p[playernum].cpu.down=true;
                     }
+                    p[playernum].cpu.down=true;
+                } else {
+                    p[playernum].cpu.down=false;
                 }
                 if (p[a].x+p[a].hitbox.w<p[playernum].x) {
                     p[playernum].cpu.left=true;
@@ -916,6 +921,10 @@ var draw = function() {
                         if (p[a].frame2===0) {
                             p[a].frame1=0;
                         }
+                    }
+                    if (p[a].canjump) {
+                        p[a].frame1=0;
+                        p[a].frame2=0;
                     }
                 }
             }
