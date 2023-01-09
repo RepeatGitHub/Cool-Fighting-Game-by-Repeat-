@@ -60,7 +60,7 @@ var characterData = [ // Default goes to 0 (aka Stickman's stats) if I forgot to
         downspecialmaxdmg: 0.2,
         downspeciallaunch: 1, // How far up an down special sends the opponent. Lower is better, but below 0 does nearly nothing unless set to an extremely low number like -100.
         meleeFox: false, // I mentioned this below, but this feature re-enables the Melee Fox glitch, which I turned into a feature for modders and future me.
-        chargeAttackCheese: false, // Pretty much, this makes it so that pressing the charge attack removes any horizontal knockback.
+        chargeAttackCheese: false, // Pretty much, this makes it so that pressing the charge attack removes any horizontal knockback. (May or may not be accidentally patched out, I haven't checked in a while.)
         pogo: false, // Makes the aerial down special do a "pogo" like Fatal Book. Inspired by Hollow Knight.
     },
     {
@@ -194,7 +194,7 @@ var p = [
 var cam = {
     x: width/-2,
     y: height/-2,
-    zoom: 1.2,
+    zoom: 1.0, //1.2
 };
 var coll = function(a, b) {
     return a.x + a.w > b.x && a.x < b.x + b.w && a.y + a.h > b.y && a.y < b.y + b.h;
@@ -605,10 +605,10 @@ var draw = function() {
         pushMatrix();
         if (modeStats.DynamicCamera) {
             cameraAct();
+            translate(width/2,height/2);
+            scale(cam.zoom);
+            translate(cam.x,cam.y);
         }
-        translate(width/2,height/2);
-        scale(cam.zoom);
-        translate(cam.x,cam.y);
         var burger1 = max((height-width)/(width/400),0);
         platformRender();
         popMatrix();
