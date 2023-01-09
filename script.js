@@ -47,8 +47,9 @@ var modeStats = {
     smoothVyHitbox: true,
     legacyMoveIndicators: false,
     moveIndicatorsVer: 1,
+    DynamicCamera: false,
 };
-var characterData = [ // Default goes to 0 if I forgot to place my data for other characters.
+var characterData = [ // Default goes to 0 (aka Stickman's stats) if I forgot to place my data for other characters.
     {
         jumpheight: 4,
         upspecialheight: 8,
@@ -190,6 +191,11 @@ var p = [
         },
     },
 ];
+var cam = {
+    x: width/-2,
+    y: height/-2,
+    zoom: 1.2,
+};
 var coll = function(a, b) {
     return a.x + a.w > b.x && a.x < b.x + b.w && a.y + a.h > b.y && a.y < b.y + b.h;
 };
@@ -555,6 +561,30 @@ var cpuAct = function(playernum) {
         }
     }
 };
+var cameraAct = function() {
+    var totalbig=[200,200,200,200];
+    for (var a=0;a<p.length;a++) {
+        if (max(p[a].x+32,0)<totalbig[0]) {
+            totalbig[0]=max(p[a].x+32,0);
+        }
+        if (min(p[a].x+32,400)>totalbig[2]) {
+            totalbig[2]=min(p[a].x+32,400);
+        }
+        if (max(p[a].y+32,0)<totalbig[1]) {
+            totalbig[1]=max(p[a].y+32,0);
+        }
+        if (min(p[a].y+32,400)>totalbig[3]) {
+            totalbig[3]=min(p[a].y+32,400);
+        }
+    }
+    
+    cam.zoom=(cam.zoom*24+constrain(400/dist(totalbig[0]-32,totalbig[1]-32,totalbig[2]+32,totalbig[3]+32),1,2))/25;
+    //println(cam.zoom);
+    //cam.x=width/-2+totalbig[0]-32;
+    //cam.y=height/-2+totalbig[1]-32;
+    cam.x=(min((width*-1+(totalbig[2]+totalbig[0])/2)*-1-width,1/cam.zoom*-200)+cam.x*3)/4;
+    cam.y=(max((height*-1+(totalbig[1]+totalbig[3])/2)*-1-height-100,-300)+cam.y*3)/4;
+};
 var draw = function() {
     backgrond();
     if (!mousePresssed) {
@@ -571,8 +601,17 @@ var draw = function() {
             translate(0,height-width);
             scale(width/400);
         }
+
+        pushMatrix();
+        if (modeStats.DynamicCamera) {
+            cameraAct();
+        }
+        translate(width/2,height/2);
+        scale(cam.zoom);
+        translate(cam.x,cam.y);
         var burger1 = max((height-width)/(width/400),0);
         platformRender();
+        popMatrix();
         var lasthp = [];
         for (var a=0;a<p.length;a++) {
             lasthp[a]=p[a].hp;
@@ -592,7 +631,19 @@ var draw = function() {
                 });
             }
         }
+        for (var b=0;b<particles.length;b++) {
+            for (var a=0;a<2;a++) {
+                particles[b].vy-=0.1;
+                particles[b].x+=particles[b].vx;
+                particles[b].y-=particles[b].vy;
+            }
+        }
         for (var a=0;a<p.length;a++) {
+            pushMatrix();
+            translate(width/2,height/2);
+            scale(cam.zoom);
+            translate(cam.x,cam.y);
+            
             var nidorinoProjectileColor=color(255,0,255);
             if (p[a].char===2) {
                 if (p[a].colorvar===0) {
@@ -608,9 +659,6 @@ var draw = function() {
             for (var b=0;b<particles.length;b++) {
                 fill(particles[b].colorr);
                 rect(particles[b].x-particles[b].size/2,particles[b].y-particles[b].size/2,particles[b].size,particles[b].size);
-                particles[b].vy-=0.1;
-                particles[b].x+=particles[b].vx;
-                particles[b].y-=particles[b].vy;
                 if (particles[b].owner!=="none") {
                     for (var c=0;c<p.length;c++) {
                         if (particles[b].owner!==c) {
@@ -730,6 +778,7 @@ var draw = function() {
                     }
                 }
             }
+            popMatrix();
             // Change poses
             if (frameCount===floor(frameCount/frameSpeed)*frameSpeed) {
                 if (myImages[p[a].char][p[a].frame1][p[a].frame2+1]===undefined) {
