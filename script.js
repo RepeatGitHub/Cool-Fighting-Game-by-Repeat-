@@ -561,29 +561,31 @@ var cpuAct = function(playernum) {
         }
     }
 };
-var cameraAct = function() {
-    var totalbig=[200,200,200,200];
-    for (var a=0;a<p.length;a++) {
-        if (max(p[a].x+32,0)<totalbig[0]) {
-            totalbig[0]=max(p[a].x+32,0);
+var cameraAct = function(type) {
+    if (type===undefined||type===1) {
+        var totalbig=[200,200,200,200];
+        for (var a=0;a<p.length;a++) {
+            if (max(p[a].x+32,0)<totalbig[0]) {
+                totalbig[0]=max(p[a].x+32,0);
+            }
+            if (min(p[a].x+32,400)>totalbig[2]) {
+                totalbig[2]=min(p[a].x+32,400);
+            }
+            if (max(p[a].y+32,0)<totalbig[1]) {
+                totalbig[1]=max(p[a].y+32,0);
+            }
+            if (min(p[a].y+32,400)>totalbig[3]) {
+                totalbig[3]=min(p[a].y+32,400);
+            }
         }
-        if (min(p[a].x+32,400)>totalbig[2]) {
-            totalbig[2]=min(p[a].x+32,400);
-        }
-        if (max(p[a].y+32,0)<totalbig[1]) {
-            totalbig[1]=max(p[a].y+32,0);
-        }
-        if (min(p[a].y+32,400)>totalbig[3]) {
-            totalbig[3]=min(p[a].y+32,400);
-        }
+        
+        cam.zoom=(cam.zoom*24+constrain(400/dist(totalbig[0]-32,totalbig[1]-32,totalbig[2]+32,totalbig[3]+32),1,2))/25;
+        //println(cam.zoom);
+        //cam.x=width/-2+totalbig[0]-32;
+        //cam.y=height/-2+totalbig[1]-32;
+        cam.x=(min((width*-1+(totalbig[2]+totalbig[0])/2)*-1-width,1/cam.zoom*-200)+cam.x*3)/4;
+        cam.y=(max((height*-1+(totalbig[1]+totalbig[3])/2)*-1-height-100,-300)+cam.y*3)/4;
     }
-    
-    cam.zoom=(cam.zoom*24+constrain(400/dist(totalbig[0]-32,totalbig[1]-32,totalbig[2]+32,totalbig[3]+32),1,2))/25;
-    //println(cam.zoom);
-    //cam.x=width/-2+totalbig[0]-32;
-    //cam.y=height/-2+totalbig[1]-32;
-    cam.x=(min((width*-1+(totalbig[2]+totalbig[0])/2)*-1-width,1/cam.zoom*-200)+cam.x*3)/4;
-    cam.y=(max((height*-1+(totalbig[1]+totalbig[3])/2)*-1-height-100,-300)+cam.y*3)/4;
 };
 var draw = function() {
     backgrond();
@@ -604,7 +606,9 @@ var draw = function() {
 
         pushMatrix();
         if (modeStats.DynamicCamera) {
-            cameraAct();
+            cameraAct(1);
+        }
+        if (cam.zoom!==1||cam.x!==width/-2||cam.y!==height/-2) {
             translate(width/2,height/2);
             scale(cam.zoom);
             translate(cam.x,cam.y);
@@ -640,9 +644,11 @@ var draw = function() {
         }
         for (var a=0;a<p.length;a++) {
             pushMatrix();
-            translate(width/2,height/2);
-            scale(cam.zoom);
-            translate(cam.x,cam.y);
+            if (cam.zoom!==1||cam.x!==width/-2||cam.y!==height/-2) {
+                translate(width/2,height/2);
+                scale(cam.zoom);
+                translate(cam.x,cam.y);
+            }
             
             var nidorinoProjectileColor=color(255,0,255);
             if (p[a].char===2) {
