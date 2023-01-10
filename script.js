@@ -153,7 +153,7 @@ var p = [
         vx: 0,
         vy: 0,
         char: 2,
-        player: "cpu1",
+        player: 1,
         colorvar: 0,
         frame1: 0,
         frame2: 0,
@@ -541,6 +541,11 @@ var cpuAct = function(playernum) {
                 p[playernum].cpu.right=false;
                 p[playernum].cpu.at3=false;
                 if (p[playernum].vx===constrain(p[playernum].vx,-0.2,0.2)) {
+                    if (p[playernum].x>200) {
+                        p[playernum].dir=0;
+                    } else {
+                        p[playernum].dir=1;
+                    }
                     p[playernum].cpu.at1=true;
                 } else {
                     p[playernum].cpu.at2=true;
@@ -572,7 +577,9 @@ var cpuAct = function(playernum) {
                     }
                     p[playernum].cpu.down=false;
                 }
-                if (p[playernum].vy<10) {
+                if (p[playernum].vy>=10||p[playernum].y>p[a].y+125) {
+
+                } else {
                     if (p[a].x+p[a].hitbox.w<p[playernum].x) {
                         p[playernum].cpu.left=true;
                         p[playernum].cpu.right=false;
@@ -581,6 +588,13 @@ var cpuAct = function(playernum) {
                         p[playernum].cpu.right=true;
                     }
                 }
+            }
+            if (p[playernum].hitbox.x>330) {
+                p[playernum].cpu.right=false;
+                p[playernum].cpu.left=true;
+            } else if (p[playernum].hitbox.x<50) {
+                p[playernum].cpu.left=false;
+                p[playernum].cpu.right=true;
             }
         }
     }
