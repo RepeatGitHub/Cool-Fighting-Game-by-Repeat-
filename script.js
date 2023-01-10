@@ -153,7 +153,7 @@ var p = [
         vx: 0,
         vy: 0,
         char: 2,
-        player: 1,
+        player: "cpu1",
         colorvar: 0,
         frame1: 0,
         frame2: 0,
@@ -534,8 +534,17 @@ if (stage===2) {
 var cpuAct = function(playernum) {
     for (var a=0;a<p.length;a++) {
         if (a!==playernum) {
+            p[playernum].cpu.at1=false;
+            p[playernum].cpu.at2=false;
             if (coll(p[a].hitbox,p[playernum].hitbox)) {
-                
+                p[playernum].cpu.left=false;
+                p[playernum].cpu.right=false;
+                p[playernum].cpu.at3=false;
+                if (p[playernum].vx===constrain(p[playernum].vx,-0.2,0.2)) {
+                    p[playernum].cpu.at1=true;
+                } else {
+                    p[playernum].cpu.at2=true;
+                }
             } else {
                 if (p[a].y>p[playernum].y+40) {
                     //println(p[a].y-p[playernum].y);
@@ -548,14 +557,29 @@ var cpuAct = function(playernum) {
                     }
                     p[playernum].cpu.down=true;
                 } else {
+                    if (p[playernum].y>p[a].y+125) {
+                        p[playernum].cpu.left=false;
+                        p[playernum].cpu.right=false;
+                        p[playernum].cpu.at2=true;
+                        p[playernum].cpu.at3=false;
+                    } else {
+                        if (p[playernum].char===2) {
+                            p[playernum].cpu.at3=true;
+                        } else {
+                            p[playernum].cpu.at3=false;
+                        }
+                        p[playernum].cpu.at2=false;
+                    }
                     p[playernum].cpu.down=false;
                 }
-                if (p[a].x+p[a].hitbox.w<p[playernum].x) {
-                    p[playernum].cpu.left=true;
-                    p[playernum].cpu.right=false;
-                } else if (p[playernum].x+p[playernum].hitbox.w<p[a].x) {
-                    p[playernum].cpu.left=false;
-                    p[playernum].cpu.right=true;
+                if (p[playernum].vy<10) {
+                    if (p[a].x+p[a].hitbox.w<p[playernum].x) {
+                        p[playernum].cpu.left=true;
+                        p[playernum].cpu.right=false;
+                    } else if (p[playernum].x+p[playernum].hitbox.w<p[a].x) {
+                        p[playernum].cpu.left=false;
+                        p[playernum].cpu.right=true;
+                    }
                 }
             }
         }
